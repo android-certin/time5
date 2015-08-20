@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Hello Mars</string>
+
+    <string name="hello_world">Hello mars!</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_button">Click me</string>
+    <string name="main_toast">Help Me!</string>
+
+</resources>
