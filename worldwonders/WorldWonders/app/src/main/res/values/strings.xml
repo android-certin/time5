@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">World Wonders</string>
+    <string name="app_name">Maravilhas do Mundo</string>
+    <string name="user_name">Usuário</string>
+    <string name="password">Senha</string>
+    <string name="login">Autenticar</string>
+    <string name="sign_up">Cadastrar</string>
+    <string name="real_name">Nome</string>
+    <string name="title_activity_sign_up">Cadastrar Usuário</string>
+
 </resources>
