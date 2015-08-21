@@ -18,8 +18,8 @@ import com.ciandt.worldwonders.model.User;
 public class LoginFragment extends android.support.v4.app.Fragment {
 
 
-    Button loginButton, signupButton;
-    EditText usernameEditText, passwordEditText;
+    private Button loginButton, signupButton;
+    private EditText usernameEditText, passwordEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,19 @@ public class LoginFragment extends android.support.v4.app.Fragment {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), SignUpActivity.class);
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
                 startActivityForResult(intent, 0);
             }
         });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WorldWondersActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+
         return view;
     }
 
