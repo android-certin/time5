@@ -7,6 +7,8 @@ public class WorldWonder {
     /*
     * Neste modulo os nomes, descrições e imagens das maravilhas são carregados do database
     * e enviados para o sistema de renderização
+    *
+    * TODO: Conectar essa classe com um banco de dados para extrair dados sobre as maravilhas
     * */
     static String wonder[] = {
             "MARAVILHA 1",
