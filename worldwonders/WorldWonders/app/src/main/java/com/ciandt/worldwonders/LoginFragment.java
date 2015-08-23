@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.ciandt.worldwonders.model.User;
 
@@ -48,7 +47,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WorldWondersActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
             }
         });
 
@@ -70,7 +69,4 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
-
-
 }
