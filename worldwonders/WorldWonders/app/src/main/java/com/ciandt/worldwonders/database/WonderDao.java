@@ -119,7 +119,6 @@ public class WonderDao implements Dao {
     public boolean delete(HashMap<String, Object> in) {
         if (in.size() > 0) {
             String sql = "DELETE FROM wonders WHERE 1=1";
-            boolean isFirst = true;
             String[] args = new String[in.size()];
             int i = 0;
             
