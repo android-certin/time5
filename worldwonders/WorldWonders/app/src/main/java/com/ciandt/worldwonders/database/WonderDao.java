@@ -166,7 +166,7 @@ public class WonderDao implements Dao {
             sql += " WHERE 1=1 ";
             
             for (String key : where.keySet()) {
-                sql += " and " + key + " = ?";
+                sql += " AND " + key + " = ?";
                 Object value = where.get(key);
                 args[i] = value.toString();
                 ++i;
