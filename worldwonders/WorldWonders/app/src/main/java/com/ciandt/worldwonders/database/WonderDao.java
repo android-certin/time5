@@ -124,7 +124,7 @@ public class WonderDao implements Dao {
     @Override
     public boolean delete(HashMap<String, Object> in) {
         if (in.size() > 0) {
-            String sql = "DELETE FROM wonders WHERE ";
+            String sql = "DELETE FROM wonders WHERE 1=1";
             boolean isFirst = true;
 
             String[] args = new String[in.size()];
@@ -134,7 +134,7 @@ public class WonderDao implements Dao {
                 if (isFirst) {
                     isFirst = false;
                 } else {
-                    sql += ", ";
+                    sql += " and ";
                 }
 
                 sql += key + " = ?";
@@ -143,11 +143,9 @@ public class WonderDao implements Dao {
                 ++i;
             }
 
-
             SQLiteStatement stmnt = db.compileStatement(sql);
+            stmnt.bindAllArgsAsStrings(args);
 
-
-            db.rawQuery(sql, args);
             return true;
         }
         return false;
@@ -155,20 +153,71 @@ public class WonderDao implements Dao {
 
     @Override
     public boolean update(HashMap<String, Object> values, HashMap<String, Object> where) {
-        if (values.size() == where.size() && values.size() > 0) {
+       boolean isUpdated = false;
 
+        String sql = "update wonders set ";
+        boolean isFirst = true;
+        if(!(values.isEmpty() && where.isEmpty())) {
+            int i = 0;
+            String[] args = new String[values.size()+where.size()];
+            for (String key : values.keySet()) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    sql += ", ";
+                }
+
+                sql += key + " = ?";
+                Object value = values.get(key);
+                args[i] = value.toString();
+                ++i;
+            }
+
+            for (String key : where.keySet()) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    sql += "and ";
+                }
+
+                sql += key + " = ?";
+                Object value = where.get(key);
+                args[i] = value.toString();
+                ++i;
+            }
+
+            SQLiteStatement stmnt = db.compileStatement(sql);
+            stmnt.bindAllArgsAsStrings(args);
+            isUpdated = true;
         }
-        return false;
+
+        return isUpdated;
     }
 
     @Override
     public boolean insert(HashMap<String, Object> values) {
+        String sql = "insert wonders (name, description, url, photo, latitude, longitude) values (?,?,?,?,?,?)";
+
+        if(values.size() == 6) {
+            int i = 0;
+            String[] args = new String[values.size()];
+            for (String key : values.keySet()) {
+                Object value = values.get(key);
+                args[i] = value.toString();
+                ++i;
+            }
+
+            SQLiteStatement stmnt = db.compileStatement(sql);
+            stmnt.bindAllArgsAsStrings(args);
+            return true;
+        }
+
         return false;
     }
 
     @Override
     public void close() {
-
+        db.close();
     }
 
 
