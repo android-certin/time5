@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
+import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.activity.SignUpActivity;
+import com.ciandt.worldwonders.activity.WorldWondersActivity;
 import com.ciandt.worldwonders.model.User;
+import com.ciandt.worldwonders.protocol.Protocol;
 
 /**
  * Created by daianefs on 21/08/15.
@@ -40,7 +43,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SignUpActivity.class);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, Protocol.SIGNUP);
             }
         });
 
@@ -48,7 +51,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WorldWondersActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
             }
         });
 
@@ -59,9 +62,13 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null) {
-            User u = (User) data.getSerializableExtra("user_info");
-            usernameEditText.setText(u.user);
+        switch (requestCode) {
+            case Protocol.SIGNUP:
+                if (data != null && resultCode == Protocol.OK) {
+                    User u = (User) data.getSerializableExtra("user_info");
+                    usernameEditText.setText(u.user);
+                }
+                break;
         }
     }
 
@@ -70,7 +77,4 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
-
-
 }

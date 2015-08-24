@@ -1,4 +1,9 @@
-package com.ciandt.worldwonders;
+package com.ciandt.worldwonders.activity;
+
+import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.adapter.WorldWondersPagerAdapter;
+import com.ciandt.worldwonders.fragment.WorldWonderFragment;
+import com.ciandt.worldwonders.model.WorldWonder;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class WorldWondersActivity extends AppCompatActivity {
-    private static final int NUM_PAGES = 3;
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
@@ -26,8 +30,6 @@ public class WorldWondersActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -40,30 +42,13 @@ public class WorldWondersActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        //int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+          //  return true;
+        //}
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private class WorldWondersPagerAdapter extends FragmentStatePagerAdapter {
-
-        public WorldWondersPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return new WorldWonderFragment();
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
     }
 }
