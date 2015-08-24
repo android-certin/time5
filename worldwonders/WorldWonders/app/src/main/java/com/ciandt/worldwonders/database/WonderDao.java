@@ -16,7 +16,6 @@ import java.util.List;
  * Created by pmachado on 8/24/15.
  */
 public class WonderDao implements Dao {
-
     private SQLiteDatabase db;
 
     WonderDao(Context context) {
@@ -28,14 +27,12 @@ public class WonderDao implements Dao {
     @Override
     public List<HashMap<String, Object>> getAll() {
         String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders";
-
+        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+        
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
 
-        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-
         while (cursor.isAfterLast()) {
-            int nc = cursor.getColumnCount();
             HashMap<String, Object> row = new HashMap<String, Object>();
 
             row.put("id", cursor.getInt(0));
@@ -56,16 +53,15 @@ public class WonderDao implements Dao {
 
     @Override
     public HashMap<String, Object> getById(int id) {
-
         String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders WHERE id = ?";
 
         String[] args = new String[1];
         args[0] = (new Integer(id)).toString();
 
+        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+        
         Cursor cursor = db.rawQuery(sql, args);
         cursor.moveToFirst();
-
-        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
         while (cursor.isAfterLast()) {
             int nc = cursor.getColumnCount();
@@ -93,13 +89,11 @@ public class WonderDao implements Dao {
 
     @Override
     public List<HashMap<String, Object>> search(String word) {
-
         String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders";
+        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToFirst();
-
-        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
         while (cursor.isAfterLast()) {
             int nc = cursor.getColumnCount();
@@ -126,40 +120,36 @@ public class WonderDao implements Dao {
         if (in.size() > 0) {
             String sql = "DELETE FROM wonders WHERE 1=1";
             boolean isFirst = true;
-
             String[] args = new String[in.size()];
-
             int i = 0;
+            
             for (String key : in.keySet()) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    sql += " and ";
-                }
-
-                sql += key + " = ?";
-                Object value = in.get(key);
-                args[i] = value.toString();
+                sql += " AND " + key + " = ?";
+                args[i] = in.get(key).toString();
                 ++i;
             }
 
             SQLiteStatement stmnt = db.compileStatement(sql);
+            
             stmnt.bindAllArgsAsStrings(args);
-
+            stmnt.execute();
+            
             return true;
         }
+        
         return false;
     }
 
     @Override
     public boolean update(HashMap<String, Object> values, HashMap<String, Object> where) {
        boolean isUpdated = false;
-
-        String sql = "update wonders set ";
+        String sql = "UPDATE wonders SET ";
+        
         boolean isFirst = true;
         if(!(values.isEmpty() && where.isEmpty())) {
             int i = 0;
-            String[] args = new String[values.size()+where.size()];
+            String[] args = new String[values.size() + where.size()];
+            
             for (String key : values.keySet()) {
                 if (isFirst) {
                     isFirst = false;
@@ -173,22 +163,20 @@ public class WonderDao implements Dao {
                 ++i;
             }
 
+            sql += " WHERE 1=1 ";
+            
             for (String key : where.keySet()) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    sql += "and ";
-                }
-
-                sql += key + " = ?";
+                sql += " and " + key + " = ?";
                 Object value = where.get(key);
                 args[i] = value.toString();
                 ++i;
             }
 
             SQLiteStatement stmnt = db.compileStatement(sql);
+            
             stmnt.bindAllArgsAsStrings(args);
             isUpdated = true;
+            stmnt.execute();
         }
 
         return isUpdated;
@@ -196,19 +184,22 @@ public class WonderDao implements Dao {
 
     @Override
     public boolean insert(HashMap<String, Object> values) {
-        String sql = "insert wonders (name, description, url, photo, latitude, longitude) values (?,?,?,?,?,?)";
+        String sql = "INSERT INTO wonders (name, description, url, photo, latitude, longitude) VALUES (?,?,?,?,?,?)";
 
-        if(values.size() == 6) {
+        if (values.size() == 6) {
             int i = 0;
             String[] args = new String[values.size()];
+            
             for (String key : values.keySet()) {
-                Object value = values.get(key);
-                args[i] = value.toString();
+                args[i] = values.get(key).toString();
                 ++i;
             }
-
+            
             SQLiteStatement stmnt = db.compileStatement(sql);
+            
             stmnt.bindAllArgsAsStrings(args);
+            stmnt.execute();
+            
             return true;
         }
 
@@ -219,6 +210,4 @@ public class WonderDao implements Dao {
     public void close() {
         db.close();
     }
-
-
 }
