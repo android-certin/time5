@@ -88,8 +88,7 @@ public class WonderDao implements Dao {
     }
 
     @Override
-    public List<HashMap<String, Object>> search(String word) {
-        String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders";
+    public List<HashMap<String, Object>> search(String sql) {
         List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
         Cursor cursor = db.rawQuery(sql, null);
