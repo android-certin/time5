@@ -17,9 +17,10 @@ import java.util.List;
  */
 public class WonderDao implements Dao {
     private SQLiteDatabase db;
-
+    private WondersSQLiteHelper dbHelper;
+    
     WonderDao(Context context) {
-        WondersSQLiteHelper dbHelper = new WondersSQLiteHelper(context);
+        dbHelper = new WondersSQLiteHelper(context);
         dbHelper.initialize();
         this.db = dbHelper.getWritableDatabase();
     }
@@ -208,5 +209,6 @@ public class WonderDao implements Dao {
     @Override
     public void close() {
         db.close();
+        dbHelper.close();
     }
 }
