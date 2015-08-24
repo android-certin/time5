@@ -1,7 +1,5 @@
 package com.ciandt.worldwonders.activity;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +9,6 @@ import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.fragment.LoginFragment;
 import com.ciandt.worldwonders.fragment.WondersFragment;
 import com.ciandt.worldwonders.model.User;
-import com.ciandt.worldwonders.model.Wonder;
 
 /**
  * Created by jpimentel on 8/20/15.
