@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders.activity;
+package com.ciandt.worldwonders.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.fragment.LoginFragment;
-import com.ciandt.worldwonders.fragment.WondersFragment;
+import com.ciandt.worldwonders.ui.fragment.LoginFragment;
+import com.ciandt.worldwonders.ui.fragment.WondersFragment;
 import com.ciandt.worldwonders.model.User;
 
 /**

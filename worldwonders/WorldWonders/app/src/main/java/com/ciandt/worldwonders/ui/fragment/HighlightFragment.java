@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders.fragment;
+package com.ciandt.worldwonders.ui.fragment;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.model.Wonder;

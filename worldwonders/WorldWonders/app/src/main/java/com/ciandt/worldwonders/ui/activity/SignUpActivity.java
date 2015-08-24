@@ -1,4 +1,4 @@
-package com.ciandt.worldwonders.activity;
+package com.ciandt.worldwonders.ui.activity;
 
 
 import android.content.Intent;

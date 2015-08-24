@@ -1,7 +1,7 @@
-package com.ciandt.worldwonders.fragment;
+package com.ciandt.worldwonders.ui.fragment;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.adapter.HighlightPagerAdapter;
+import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
 
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;

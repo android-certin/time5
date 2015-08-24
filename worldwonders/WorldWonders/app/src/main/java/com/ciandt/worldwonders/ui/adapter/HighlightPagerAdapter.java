@@ -1,10 +1,10 @@
-package com.ciandt.worldwonders.adapter;
+package com.ciandt.worldwonders.ui.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.ciandt.worldwonders.fragment.HighlightFragment;
+import com.ciandt.worldwonders.ui.fragment.HighlightFragment;
 import com.ciandt.worldwonders.model.Wonder;
 
 /**
