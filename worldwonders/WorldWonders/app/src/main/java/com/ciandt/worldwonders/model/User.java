@@ -13,4 +13,12 @@ public class User implements Serializable {
         this.name = name;
         this.user = user;
     }
+    public User() {
+        this.name = "";
+        this.user = "";
+    }
+
+    public boolean authenticate() {
+        return true;
+    }
 }

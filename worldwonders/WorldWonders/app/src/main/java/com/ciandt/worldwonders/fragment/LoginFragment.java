@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.activity.SignUpActivity;
-import com.ciandt.worldwonders.activity.WorldWondersActivity;
 import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.protocol.Protocol;
 
@@ -23,11 +22,16 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
     private Button loginButton, signupButton;
     private EditText usernameEditText, passwordEditText;
+    private OnLoginListener onLoginListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    public void setOnLoginListener(OnLoginListener listener) {
+        this.onLoginListener = listener;
     }
 
     @Nullable
@@ -50,8 +54,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WorldWondersActivity.class);
-                startActivity(intent);
+                onLoginListener.onLogin(new User());
             }
         });
 
@@ -77,4 +80,10 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+    public interface OnLoginListener {
+        void onLogin(User user);
+    }
+
 }
+

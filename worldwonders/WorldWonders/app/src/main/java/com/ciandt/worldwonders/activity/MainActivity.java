@@ -1,5 +1,7 @@
 package com.ciandt.worldwonders.activity;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,9 @@ import android.util.Log;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.fragment.LoginFragment;
+import com.ciandt.worldwonders.fragment.WondersFragment;
+import com.ciandt.worldwonders.model.User;
+import com.ciandt.worldwonders.model.Wonder;
 
 /**
  * Created by jpimentel on 8/20/15.
@@ -24,10 +29,32 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         LoginFragment loginFragment = new LoginFragment();
+
+        loginFragment.setOnLoginListener(
+                new LoginFragment.OnLoginListener() {
+                    @Override
+                    public void onLogin(User user) {
+                        if (user.authenticate()) {
+                            addWondersFragment();
+                        }
+                    }
+                }
+        );
+
         fragmentManager.beginTransaction()
                 .replace(R.id.frameMain, loginFragment)
                 .commit();
 
+    }
+
+
+    public void addWondersFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        WondersFragment wondersFragment = new WondersFragment();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.frameMain, wondersFragment)
+                .commit();
     }
 
     @Override
