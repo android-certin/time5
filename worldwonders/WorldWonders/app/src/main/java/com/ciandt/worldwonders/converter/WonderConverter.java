@@ -1,4 +1,6 @@
-package com.ciandt.worldwonders.model;
+package com.ciandt.worldwonders.converter;
+
+import com.ciandt.worldwonders.model.Wonder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
- */public class WonderConverter implements BaseConverter<Wonder> {
+ */public class WonderConverter implements ConverterBase<Wonder> {
 
     @Override
     public List<Wonder> fromListHashMap(List<HashMap<String, Object>> listTable) {

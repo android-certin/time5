@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 
-import com.ciandt.worldwonders.model.BaseConverter;
+import com.ciandt.worldwonders.converter.ConverterBase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +13,13 @@ import java.util.List;
 /**
  * Created by pmachado on 8/24/15.
  */
-public class Dao<T> extends BaseDao {
+public class Dao<T> extends DaoBase {
     protected SQLiteDatabase db;
     protected String tableName;
 
-    private BaseConverter<T> converter;
+    private ConverterBase<T> converter;
 
-    public Dao(String tableName, BaseConverter<T> converter) {
+    public Dao(String tableName, ConverterBase<T> converter) {
         super();
 
         this.converter = converter;

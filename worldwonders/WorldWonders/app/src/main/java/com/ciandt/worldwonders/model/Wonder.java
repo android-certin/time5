@@ -1,11 +1,8 @@
 package com.ciandt.worldwonders.model;
 
-import java.io.Serializable;
+import com.ciandt.worldwonders.converter.WonderConverter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by pmachado on 8/23/15.

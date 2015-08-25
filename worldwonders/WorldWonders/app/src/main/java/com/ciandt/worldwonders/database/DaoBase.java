@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by pmachado on 8/24/15.
  */
-public class BaseDao {
+public class DaoBase {
     public List<HashMap<String, Object>> convert(Cursor cursor) {
         List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
