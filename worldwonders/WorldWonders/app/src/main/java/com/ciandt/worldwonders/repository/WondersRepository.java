@@ -9,6 +9,7 @@ import com.ciandt.worldwonders.database.WonderDao;
 import com.ciandt.worldwonders.model.Wonder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,6 +31,9 @@ public class WondersRepository  {
             protected List<Wonder> doInBackground(Void... params) {
                 Dao<Wonder> dao = new WonderDao(context);
                 List<Wonder> result = dao.getAll();
+
+                Collections.shuffle(result);
+
                 dao.close();
 
                 return result;

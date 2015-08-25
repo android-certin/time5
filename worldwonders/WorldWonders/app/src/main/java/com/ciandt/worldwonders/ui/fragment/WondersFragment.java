@@ -48,7 +48,6 @@ public class WondersFragment extends Fragment {
         repository.getAll(new WondersRepository.WonderAllListener() {
             @Override
             public void onWonderAll(Exception e, List<Wonder> wonders) {
-
                 pagerAdapter = new HighlightPagerAdapter(manager, wonders);
                 viewPager.setAdapter(pagerAdapter);
             }
