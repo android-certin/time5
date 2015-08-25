@@ -36,7 +36,7 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static boolean verificaBancoCriado(){
+    public static boolean verifyDatabase(){
 
         File filedb = new File(DATABASE_PATH);
 
@@ -47,7 +47,7 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public static boolean copiaBanco(Context context){
+    public static boolean copyDatabase(Context context){
 
         try {
             InputStream filedb = context.getAssets().open ("database/"+DATABASE_NAME);

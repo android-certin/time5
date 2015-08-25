@@ -12,8 +12,8 @@ public class WorldWondersApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (!WondersSQLiteHelper.verificaBancoCriado()){
-            WondersSQLiteHelper.copiaBanco(getApplicationContext());
+        if (!WondersSQLiteHelper.verifyDatabase()){
+            WondersSQLiteHelper.copyDatabase(getApplicationContext());
         }
     }
 }

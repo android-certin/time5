@@ -28,8 +28,6 @@ public class WondersFragment extends Fragment {
     private RecyclerView recyclerView;
     private WonderItemAdapter wonderItemAdapter;
 
-    private FragmentManager manager;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,18 +48,16 @@ public class WondersFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.slide);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
-
-        manager  = getFragmentManager();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         WondersRepository repository = new WondersRepository(getContext());
         repository.getAll(new WondersRepository.WonderAllListener() {
             @Override
             public void onWonderAll(Exception e, List<Wonder> wonders) {
-                pagerAdapter = new HighlightPagerAdapter(manager, wonders);
+                pagerAdapter = new HighlightPagerAdapter(getFragmentManager(), wonders);
                 viewPager.setAdapter(pagerAdapter);
 
                 wonderItemAdapter = new WonderItemAdapter(wonders);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(wonderItemAdapter);
             }
         });
