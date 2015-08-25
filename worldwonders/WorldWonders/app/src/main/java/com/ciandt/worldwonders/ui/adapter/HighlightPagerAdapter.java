@@ -31,14 +31,21 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Wonder wonder = listWonders.get(position);
+
+        Wonder wonder = new Wonder("mausoleu.jpg",0);
+        wonder.photo = "mausoleu.jpg";
+
+        if (listWonders != null && listWonders.size()>position){
+           wonder = listWonders.get(position);
+        }
+
         HighlightFragment highlightFragment = HighlightFragment.newInstance(wonder);
         return highlightFragment;
     }
 
     @Override
     public int getCount() {
-        return listWonders.size();
+        return 3;
     }
 }
 

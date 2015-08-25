@@ -57,7 +57,7 @@ public class HighlightFragment extends Fragment {
         ImageView imgWonder = (ImageView) view.findViewById(R.id.fragmanet_world_wonder_img);
         String namePhoto = wonder.photo;
 
-        int resourceId = Helpers.getRawResourceID(getContext(), namePhoto);
+        int resourceId = Helpers.getRawResourceID(getContext(), namePhoto.replace(".jpg",""));
         Picasso.with(getContext()).
                 load(resourceId).
                 config(Bitmap.Config.RGB_565).into(imgWonder);
