@@ -20,7 +20,7 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     public HighlightPagerAdapter(FragmentManager fm, List<Wonder> listWonders) {
         super(fm);
-this.listWonders = listWonders;
+        this.listWonders = listWonders;
     }
 
     @Override
