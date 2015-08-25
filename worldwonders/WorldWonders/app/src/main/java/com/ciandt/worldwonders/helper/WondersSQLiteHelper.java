@@ -3,66 +3,74 @@ package com.ciandt.worldwonders.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
- * Created by pmachado on 8/24/15.
+ * Created by wgomes on 24/08/15.
  */
 public class WondersSQLiteHelper extends SQLiteOpenHelper {
 
-
-    private static final String DATABASE_NAME = "wonders.db";
+    private static final String DATABASE_NAME="wonders.db";
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_DIRECTORY = "data/data/com.ciandt.worldwonders/databases/";
     private static final String DATABASE_PATH = DATABASE_DIRECTORY + DATABASE_NAME;
-    private static final int DATABASE_VERSION = 1;
 
-    private static final String ASSETS_DATABASE_PATH = "database/" + DATABASE_NAME;
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
 
     public WondersSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        setupDatabase(context);
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-    }
+    public static boolean verificaBancoCriado(){
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        //roda o script de update
-    }
+        File filedb = new File(DATABASE_PATH);
 
-    public static void setupDatabase(Context context) {
-
-        File path = new File(DATABASE_DIRECTORY);
-        if (!path.exists()) {
-            path.mkdirs();
+        if (filedb.exists()){
+            return true;
         }
 
-        File db = new File(DATABASE_PATH);
-        if (!db.exists()) {
+        return false;
+    }
 
-            try {
-                InputStream in = context.getAssets().open(ASSETS_DATABASE_PATH);
-                FileOutputStream out = new FileOutputStream(db);
+    public static boolean copiaBanco(Context context){
 
-                // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                out.flush();
-                in.close();
-                out.close();
-
-            } catch (Exception e) {
-                Log.e("WondersSQLiteHelper", e.getMessage());
+        try {
+            InputStream filedb = context.getAssets().open ("database/"+DATABASE_NAME);
+            File diretorio = new File(DATABASE_DIRECTORY);
+            if (!diretorio.exists()){
+                diretorio.mkdirs();
             }
+
+            OutputStream out = new FileOutputStream(new File(DATABASE_PATH));
+            byte[] buf = new byte[1024];
+            int len;
+            while((len=filedb.read(buf))>0){
+                out.write(buf,0,len);
+            }
+            out.close();
+            filedb.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+
+        return false;
     }
 }
