@@ -27,6 +27,10 @@ public class Dao<T> extends DaoBase {
         this.db = null;
     }
 
+    public void setDatabase(SQLiteDatabase db) {
+            this.db = db;
+    }
+
     public List<T> getAll() {
         String sql = "SELECT * FROM " + tableName;
         Cursor cursor = db.rawQuery(sql, null);

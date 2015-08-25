@@ -11,22 +11,22 @@ import com.ciandt.worldwonders.model.Wonder;
 public class WonderDao extends Dao<Wonder> {
     WondersSQLiteHelper dbHelper;
 
-    WonderDao(Context context, String tableName) {
+    public WonderDao(Context context, String tableName) {
         super(tableName, Wonder.getConverter());
 
         dbHelper = new WondersSQLiteHelper(context);
         dbHelper.initialize();
 
-        this.db = dbHelper.getWritableDatabase();
+        setDatabase(dbHelper.getWritableDatabase());
     }
 
-    WonderDao(Context context) {
+    public WonderDao(Context context) {
         super("wonders", Wonder.getConverter());
 
         dbHelper = new WondersSQLiteHelper(context);
         dbHelper.initialize();
 
-        this.db = dbHelper.getWritableDatabase();
+        setDatabase(dbHelper.getWritableDatabase());
     }
 
 
