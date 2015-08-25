@@ -6,8 +6,15 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.4"
         android:id="@+id/fragmanet_world_wonder_img"
         />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.6"
+        android:id="@+id/text_frag_hig"/>
 
 </LinearLayout>
