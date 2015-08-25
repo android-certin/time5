@@ -55,7 +55,6 @@ public class HighlightFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageView imgWonder = (ImageView) view.findViewById(R.id.fragmanet_world_wonder_img);
-        imgWonder.setScaleType(ImageView.ScaleType.CENTER_CROP);
         String namePhoto = wonder.photo;
 
         TextView textView = (TextView)view.findViewById(R.id.text_frag_hig);

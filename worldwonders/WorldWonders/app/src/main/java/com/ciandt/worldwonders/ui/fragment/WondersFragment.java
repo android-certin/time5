@@ -42,7 +42,7 @@ public class WondersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewPager = (ViewPager) view.findViewById(R.id.slide);
-       manager  = getFragmentManager();
+        manager  = getFragmentManager();
 
         WondersRepository repository = new WondersRepository(getContext());
         repository.getAll(new WondersRepository.WonderAllListener() {
