@@ -64,6 +64,9 @@ public class Dao<T> extends DaoBase {
         String[] args = { String.valueOf(converter.getId(value)) };
 
         SQLiteStatement statement = db.compileStatement(sql);
+
+        if (statement == null) return false;
+
         statement.bindAllArgsAsStrings(args);
         statement.execute();
 
@@ -88,6 +91,9 @@ public class Dao<T> extends DaoBase {
         args[values.size() + 1] = String.valueOf(converter.getId(value));
 
         SQLiteStatement statement = db.compileStatement(sql);
+
+        if (statement == null) return false;
+
         statement.bindAllArgsAsStrings(args);
         statement.execute();
 
@@ -114,6 +120,9 @@ public class Dao<T> extends DaoBase {
         sql += ")";
 
         SQLiteStatement statement = db.compileStatement(sql);
+
+        if (statement == null) return false;
+
         statement.bindAllArgsAsStrings(args);
         statement.execute();
 
