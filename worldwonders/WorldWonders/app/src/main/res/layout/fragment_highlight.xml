@@ -9,6 +9,7 @@
         android:layout_height="0dip"
         android:layout_weight="0.4"
         android:id="@+id/fragmanet_world_wonder_img"
+        android:scaleType="centerCrop"
         />
 
     <TextView

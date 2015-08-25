@@ -58,7 +58,7 @@ public class HighlightFragment extends Fragment {
         String namePhoto = wonder.photo;
 
         TextView textView = (TextView)view.findViewById(R.id.text_frag_hig);
-        textView.setText(wonder.name + " - " + wonder.photo);
+        textView.setText(wonder.name);
 
         int resourceId = Helpers.getRawResourceID(getContext(), namePhoto.replace(".jpg",""));
         Picasso.with(getContext()).
