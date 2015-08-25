@@ -10,14 +10,13 @@ public interface Dao<T> {
 
     T getById(int id);
 
-    List<T> search(String word);
+    List<T> search(String sql);
 
-    boolean delete(T args);
+    boolean delete(T value);
 
-    boolean update(T values,
-                          int id);
+    boolean update(T value);
 
-    boolean insert(T values);
+    boolean insert(T value);
 
     void close();
 }

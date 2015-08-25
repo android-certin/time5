@@ -27,34 +27,17 @@ public class WonderDao implements Dao<Wonder> {
 
     @Override
     public List<Wonder> getAll() {
-        String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders";
-        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
-        
+        String sql = "SELECT * FROM wonders";
         Cursor cursor = db.rawQuery(sql, null);
-        cursor.moveToFirst();
 
-        while (cursor.isAfterLast()) {
-            HashMap<String, Object> row = new HashMap<String, Object>();
+        List<Wonder> result = convert(cursor);
 
-            row.put("id", cursor.getInt(0));
-            row.put("name", cursor.getString(1));
-            row.put("description", cursor.getString(2));
-            row.put("url", cursor.getString(3));
-            row.put("photo", cursor.getString(4));
-            row.put("latitude", cursor.getDouble(5));
-            row.put("longitude", cursor.getDouble(6));
-
-            result.add(row);
-
-            cursor.moveToNext();
-        }
-
-        return Wonder.fromListHashMap(result);
+        return result;
     }
 
     @Override
     public Wonder getById(int id) {
-        String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders WHERE id = ?";
+        String sql = "SELECT * FROM wonders WHERE id = ?";
 
         String args[] = {String.valueOf(id)};
         Cursor cursor = db.rawQuery(sql, args);
@@ -74,9 +57,9 @@ public class WonderDao implements Dao<Wonder> {
     }
 
     private List<Wonder> convert(Cursor cursor) {
-        cursor.moveToFirst();
-
         List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+
+        cursor.moveToFirst();
 
         while (cursor.isAfterLast()) {
             int nc = cursor.getColumnCount();
@@ -100,82 +83,54 @@ public class WonderDao implements Dao<Wonder> {
 
     @Override
     public boolean delete(Wonder wonder) {
-        HashMap<String, Object> in = wonder.toHashMap();
-        if (in.size() > 0) {
-            String sql = "DELETE FROM wonders WHERE 1=1";
-            String[] args = new String[in.size()];
-            int i = 0;
-            
-            for (String key : in.keySet()) {
-                sql += " AND " + key + " = ?";
-                args[i] = in.get(key).toString();
-                ++i;
-            }
+        String sql = "DELETE FROM wonders WHERE id=?";
+        String[] args = { String.valueOf(wonder.id) };
 
-            SQLiteStatement stmnt = db.compileStatement(sql);
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.bindAllArgsAsStrings(args);
+        statement.execute();
 
-            stmnt.bindAllArgsAsStrings(args);
-            stmnt.execute();
-            
-            return true;
-        }
-        
-        return false;
+        return true;
     }
 
     @Override
-    public boolean update(Wonder wonder, int id) {
+    public boolean update(Wonder wonder) {
         HashMap<String, Object> values = wonder.toHashMap();
-        boolean isUpdated = false;
         String sql = "UPDATE wonders SET ";
         
-        if(!values.isEmpty()) {
-            boolean isFirst = true;
-            int i = 0;
-            String[] args = new String[values.size() + 1];
-            
-            for (String key : values.keySet()) {
-                if (isFirst) {
-                    isFirst = false;
-                } else {
-                    sql += ", ";
-                }
+        int i = 0;
+        String[] args = new String[values.size() + 1];
 
-                sql += key + " = ?";
-                Object value = values.get(key);
-                args[i] = value.toString();
-                ++i;
-            }
-
-            sql += " WHERE id = ?";
-            args[values.size() + 1] = String.valueOf(id);
-
-            db.rawQuery(sql, args);
+        for (String key : values.keySet()) {
+            if (i> 0) sql += ", ";
+            sql += key + " = ?";
+            args[i] = values.get(key).toString();
+            ++i;
         }
 
-        return isUpdated;
+        sql += " WHERE id = ?";
+        args[values.size() + 1] = String.valueOf(wonder.id);
+
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.bindAllArgsAsStrings(args);
+        statement.execute();
+
+        return true;
     }
 
     @Override
     public boolean insert(Wonder wonder) {
-        HashMap<String, Object> values = wonder.toHashMap();
         String sql = "INSERT INTO wonders (name, description, url, photo, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)";
+        String[] args = {String.valueOf(wonder.name),
+        String.valueOf(wonder.description), String.valueOf(wonder.url),
+        String.valueOf(wonder.photo), String.valueOf(wonder.latitude),
+        String.valueOf(wonder.longitude)};
 
-        if (values.size() == 6) {
-            int i = 0;
-            String[] args = new String[values.size()];
-            
-            for (String key : values.keySet()) {
-                args[i] = values.get(key).toString();
-                ++i;
-            }
-            
-            db.rawQuery(sql, args);
-            
-            return true;
-        }
+        SQLiteStatement statement = db.compileStatement(sql);
+        statement.bindAllArgsAsStrings(args);
+        statement.execute();
 
-        return false;
+        return true;
     }
 
     @Override
