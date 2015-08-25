@@ -4,6 +4,7 @@ import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.WondersRepository;
 import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
+import com.ciandt.worldwonders.ui.adapter.WonderItemAdapter;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,9 @@ public class WondersFragment extends Fragment {
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
+
+    private RecyclerView recyclerView;
+    private WonderItemAdapter wonderItemAdapter;
 
     private FragmentManager manager;
 
@@ -42,6 +47,8 @@ public class WondersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewPager = (ViewPager) view.findViewById(R.id.slide);
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+
         manager  = getFragmentManager();
 
         WondersRepository repository = new WondersRepository(getContext());
@@ -50,6 +57,9 @@ public class WondersFragment extends Fragment {
             public void onWonderAll(Exception e, List<Wonder> wonders) {
                 pagerAdapter = new HighlightPagerAdapter(manager, wonders);
                 viewPager.setAdapter(pagerAdapter);
+
+                wonderItemAdapter = new WonderItemAdapter(wonders);
+                recyclerView.setAdapter(wonderItemAdapter);
             }
         });
     }

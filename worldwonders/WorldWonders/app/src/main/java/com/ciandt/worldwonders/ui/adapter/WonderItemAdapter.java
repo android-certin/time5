@@ -15,19 +15,17 @@ import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 /**
  * Created by pmachado on 8/25/15.
  */
-public class HighlightItemAdapter extends RecyclerView.Adapter<HighlightItemAdapter.ViewHolder> {
+public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.ViewHolder> {
 
     private List<Wonder> wonderList;
     private Context context;
 
-    public HighlightItemAdapter(List<Wonder> wonderList) {
+    public WonderItemAdapter(List<Wonder> wonderList) {
         this.wonderList = wonderList;
     }
 
@@ -66,7 +64,7 @@ public class HighlightItemAdapter extends RecyclerView.Adapter<HighlightItemAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         public TextView text;
         public ImageView image;
 
