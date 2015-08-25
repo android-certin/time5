@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,9 @@ public class WondersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewPager = (ViewPager) view.findViewById(R.id.slide);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         manager  = getFragmentManager();
 

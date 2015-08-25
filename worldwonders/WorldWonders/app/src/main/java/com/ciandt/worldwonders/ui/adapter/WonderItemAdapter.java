@@ -49,11 +49,19 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
         Wonder wonder = wonderList.get(i);
 
         String namePhoto = wonder.photo;
+<<<<<<< Updated upstream
 
         //int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg", ""));
         //Picasso.with(context).
         //        load(resourceId).
         //        config(Bitmap.Config.RGB_565).into(holder.image);
+=======
+/*
+        int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg", ""));
+        Picasso.with(context).
+                load(resourceId).
+                config(Bitmap.Config.RGB_565).into(holder.image);*/
+>>>>>>> Stashed changes
 
         holder.text.setText(wonder.name);
     }

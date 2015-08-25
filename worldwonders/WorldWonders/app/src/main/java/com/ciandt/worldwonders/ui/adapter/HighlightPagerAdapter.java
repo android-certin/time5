@@ -25,7 +25,6 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         Wonder wonder = listWonders.get(position);
         HighlightFragment highlightFragment = HighlightFragment.newInstance(wonder);
         return highlightFragment;
@@ -33,7 +32,7 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return listWonders.size();
     }
 }
 
