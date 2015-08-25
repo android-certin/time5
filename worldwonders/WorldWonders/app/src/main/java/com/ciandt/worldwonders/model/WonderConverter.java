@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
- */public class WonderConverter implements DataConverter<Wonder> {
+ */public class WonderConverter implements BaseConverter<Wonder> {
 
     @Override
     public List<Wonder> fromListHashMap(List<HashMap<String, Object>> listTable) {

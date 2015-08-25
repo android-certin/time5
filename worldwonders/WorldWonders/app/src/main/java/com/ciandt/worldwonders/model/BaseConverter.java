@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by pmachado on 8/24/15.
  */
-public interface DataConverter<T> {
+public interface BaseConverter<T> {
     List<T> fromListHashMap(List<HashMap<String, Object>> listTable);
     HashMap<String, Object> toHashMap(T v);
     T fromHashMap(HashMap<String, Object> table);
