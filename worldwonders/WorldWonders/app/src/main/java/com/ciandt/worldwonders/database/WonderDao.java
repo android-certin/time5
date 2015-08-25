@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by pmachado on 8/24/15.
  */
-public class WonderDao implements Dao {
+public class WonderDao implements Dao<HashMap<String, Object>> {
     private SQLiteDatabase db;
     private WondersSQLiteHelper dbHelper;
     
