@@ -50,7 +50,6 @@ public class WondersFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.slide);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         manager  = getFragmentManager();
 
@@ -62,6 +61,7 @@ public class WondersFragment extends Fragment {
                 viewPager.setAdapter(pagerAdapter);
 
                 wonderItemAdapter = new WonderItemAdapter(wonders);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(wonderItemAdapter);
             }
         });

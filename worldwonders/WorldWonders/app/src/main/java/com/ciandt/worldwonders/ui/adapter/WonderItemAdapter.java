@@ -33,14 +33,9 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         context = parent.getContext();
 
-        View v = LayoutInflater.from(context)
-                               .inflate(R.layout.fragment_wonder_item, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.fragment_wonder_item, parent, false);
 
-        TextView textView = (TextView) v.findViewById(R.id.wonder_item_nome);
-        ImageView imageView = (ImageView) v.findViewById(R.id.wonder_item_imagem);
-
-        ViewHolder vh = new ViewHolder(textView, imageView);
-
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
@@ -49,11 +44,10 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
         Wonder wonder = wonderList.get(i);
 
         String namePhoto = wonder.photo;
-
-        /*int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg", ""));
+        int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg",""));
         Picasso.with(context).
                 load(resourceId).
-                config(Bitmap.Config.RGB_565).into(holder.image);*/
+                config(Bitmap.Config.RGB_565).into(holder.image);
 
         holder.text.setText(wonder.name);
     }
@@ -68,10 +62,12 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
         public TextView text;
         public ImageView image;
 
-        public ViewHolder(TextView text, ImageView image) {
-            super(text);
-            this.text = text;
-            this.image = image;
+        public ViewHolder(View v) {
+            super(v);
+
+            this.text  = (TextView) v.findViewById(R.id.wonder_item_nome);
+            this.image = (ImageView) v.findViewById(R.id.wonder_item_imagem);
+
         }
     }
 

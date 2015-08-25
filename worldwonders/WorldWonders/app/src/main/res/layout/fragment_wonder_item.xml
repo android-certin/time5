@@ -4,13 +4,15 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="50dip"
-        android:layout_height="50dip"
+        android:layout_width="0dip"
+        android:layout_height="100dip"
+        android:layout_weight="0.3"
         android:id="@+id/wonder_item_imagem"/>
 
     <TextView
-        android:layout_width="50dip"
-        android:layout_height="50dip"
+        android:layout_width="0dip"
+        android:layout_height="100dip"
+        android:layout_weight="0.7"
         android:id="@+id/wonder_item_nome"/>
 
 </LinearLayout>
