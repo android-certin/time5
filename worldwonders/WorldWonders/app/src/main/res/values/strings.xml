@@ -7,4 +7,7 @@
     <string name="real_name">Nome</string>
     <string name="title_activity_sign_up">Cadastrar Usuário</string>
     <string name="title_activity_world_wonders">Maravilhas do Mundo</string>
+    <string name="fire">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="dialog_fire_missiles">Dialogo</string>
 </resources>
