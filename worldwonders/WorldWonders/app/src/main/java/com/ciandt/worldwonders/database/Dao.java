@@ -1,29 +1,23 @@
 package com.ciandt.worldwonders.database;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
- *
- * @v1 < @v2
  */
 public interface Dao<T> {
-    public List<T> getAll();
+    List<T> getAll();
 
-    public T getById(int id);
+    T getById(int id);
 
-    public List<T> search(String word);
+    List<T> search(String word);
 
+    boolean delete(T args);
 
-    public boolean delete(T args);
+    boolean update(T values,
+                          int id);
 
-    public boolean update(T values,
-                          T where);
+    boolean insert(T values);
 
-    public boolean insert(T values);
-
-    public void close();
+    void close();
 }
