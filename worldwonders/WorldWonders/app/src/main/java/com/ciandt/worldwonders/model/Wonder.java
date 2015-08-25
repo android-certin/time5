@@ -26,37 +26,10 @@ public class Wonder implements Serializable {
     public double latitude;
     public double longitude;
 
-    public static Wonder fromHashMap(HashMap<String, Object> table) {
-        return new Wonder(
-                table.get("name").toString(),
-                (int) table.get("id"),
-                table.get("description").toString(),
-                table.get("url").toString(),
-                table.get("photo").toString(),
-                (double) table.get("longitude"),
-                (double) table.get("latitude"));
+    public static WonderConverter getConverter() {
+        return new WonderConverter();
     }
 
-    public HashMap<String, Object> toHashMap() {
-        HashMap<String, Object> m = new HashMap<String, Object>();
-        m.put("name", name);
-        m.put("id", id);
-        m.put("description", description);
-        m.put("url", url);
-        m.put("photo", photo);
-        m.put("latitude", latitude);
-        m.put("longitude", longitude);
-        return m;
-    }
-    
-    public static List<Wonder> fromListHashMap(List<HashMap<String, Object>> listTable) {
-        List<Wonder> l = new ArrayList<Wonder>();
-        for (HashMap<String, Object> t: listTable) {
-            l.add(fromHashMap(t));
-        }
-        return l;
-    }
-    
     public Wonder(String name, int id, String description, String url, String photo, double longitude, double latitude) {
         this.name = name;
         this.id = id;
