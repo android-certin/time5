@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
+ * Contributions by eferraz on 8/25/15
  */
 public class Dao<T> extends DaoBase {
     protected SQLiteDatabase db;

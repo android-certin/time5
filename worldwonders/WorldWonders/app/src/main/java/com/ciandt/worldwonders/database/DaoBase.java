@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
+ * Contributions by eferraz on 8/25/15
  */
 public class DaoBase {
     public List<HashMap<String, Object>> convert(Cursor cursor) {
@@ -26,7 +27,7 @@ public class DaoBase {
                             row.put(key, cursor.getInt(i));
                             break;
                         case AbstractCursor.FIELD_TYPE_FLOAT:
-                            row.put(key, cursor.getFloat(i));
+                            row.put(key, cursor.getDouble(i));
                             break;
                         case AbstractCursor.FIELD_TYPE_STRING:
                             row.put(key, cursor.getString(i));
