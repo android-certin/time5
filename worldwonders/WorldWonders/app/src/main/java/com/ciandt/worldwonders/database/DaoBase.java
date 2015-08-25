@@ -15,7 +15,7 @@ public class DaoBase {
         List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
         cursor.moveToFirst();
-        while (cursor.isAfterLast()) {
+        while (!cursor.isAfterLast()) {
             int nc = cursor.getColumnCount();
             HashMap<String, Object> row = new HashMap<String, Object>();
 
