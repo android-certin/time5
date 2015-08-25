@@ -76,20 +76,21 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
                 public void onClick(View v) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Titulo");
+                    builder.setMessage("Qualifique este software");
+                    builder.setPositiveButton("Positivo", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                        }
+                    });
 
-                    builder.setMessage(R.string.dialog_fire_missiles)
-                            .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // FIRE ZE MISSILES!
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User cancelled the dialog
-                                }
-                            });
+                    builder.setNegativeButton("Negativo", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                        }
+                    });
 
-                    builder.create().show();
+                    AlertDialog alerta = builder.create();
+                    alerta.show();
+
                 }
             });
 
