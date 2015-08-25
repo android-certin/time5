@@ -55,13 +55,9 @@ public class WonderDao implements Dao {
     @Override
     public HashMap<String, Object> getById(int id) {
         String sql = "SELECT id, name, description, url, photo, latitude, longitude FROM wonders WHERE id = ?";
-
-        String[] args = new String[1];
-        args[0] = (new Integer(id)).toString();
-
         List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
         
-        Cursor cursor = db.rawQuery(sql, args);
+        Cursor cursor = db.rawQuery(sql, {(new Integer(id)).toString()});
         cursor.moveToFirst();
 
         while (cursor.isAfterLast()) {
