@@ -120,11 +120,23 @@ public class WonderDao implements Dao<Wonder> {
 
     @Override
     public boolean insert(Wonder wonder) {
-        String sql = "INSERT INTO wonders (name, description, url, photo, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)";
-        String[] args = {String.valueOf(wonder.name),
-        String.valueOf(wonder.description), String.valueOf(wonder.url),
-        String.valueOf(wonder.photo), String.valueOf(wonder.latitude),
-        String.valueOf(wonder.longitude)};
+        HashMap<String, Object> values = wonder.toHashMap();
+        int n = values.size();
+        String[] args = new String[n];
+        int i = 0;
+        String sql = "INSERT INTO wonders (";
+        for (String key: values.keySet()) {
+            if (i > 0) sql += ", ";
+            sql += key;
+            args[i] = values.get(i).toString();
+            ++i;
+        }
+        sql += ") VALUES (";
+        for (int p = 0; p < n; ++p) {
+            if (p > 0) sql += ", ";
+            sql += "?";
+        }
+        sql += ")";
 
         SQLiteStatement statement = db.compileStatement(sql);
         statement.bindAllArgsAsStrings(args);
