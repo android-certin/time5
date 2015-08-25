@@ -1,14 +1,18 @@
 package com.ciandt.worldwonders.ui.fragment;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
+import com.ciandt.worldwonders.repository.WondersRepository;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -48,9 +52,11 @@ public class HighlightFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView textView = (TextView) view.findViewById(R.id.fragment_world_wonder_label);
+        WondersRepository repository = new WondersRepository(getContext());
 
-        textView.setText(wonder.name + "\n");
-        textView.append((new Integer(wonder.id)).toString() + "\n");
+        ImageView imgWonder = (ImageView) view.findViewById(R.id.fragmanet_world_wonder_img);
+        String namePhoto = wonder.photo;
+
+        //int resourceId = Helpers.getRawResourceID(getContext(), namePhoto);
     }
 }

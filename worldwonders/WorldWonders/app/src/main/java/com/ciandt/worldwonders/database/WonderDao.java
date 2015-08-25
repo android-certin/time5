@@ -15,7 +15,6 @@ public class WonderDao extends Dao<Wonder> {
         super(tableName, Wonder.getConverter());
 
         dbHelper = new WondersSQLiteHelper(context);
-        dbHelper.initialize();
 
         setDatabase(dbHelper.getWritableDatabase());
     }
@@ -24,7 +23,6 @@ public class WonderDao extends Dao<Wonder> {
         super("wonders", Wonder.getConverter());
 
         dbHelper = new WondersSQLiteHelper(context);
-        dbHelper.initialize();
 
         setDatabase(dbHelper.getWritableDatabase());
     }

@@ -3,36 +3,31 @@ package com.ciandt.worldwonders.helper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-
+import java.io.InputStream;
 /**
  * Created by pmachado on 8/24/15.
  */
 public class WondersSQLiteHelper extends SQLiteOpenHelper {
 
+
     private static final String DATABASE_NAME = "wonders.db";
-
-    private static final String DATABASE_DIRECTORY = "data/data/com.ciandt.worldwonders/databases/";
+    private static final String DATABASE_DIRECTORY = "/data/data/com.ciandt.worldwonders/database/";
     private static final String DATABASE_PATH = DATABASE_DIRECTORY + DATABASE_NAME;
-
-    private static final String DATABASE_ORIGIN_DIRECTORY = "/assets/database/";
-    private static final String DATABASE_ORIGIN_PATH = DATABASE_ORIGIN_DIRECTORY + DATABASE_NAME;
-
     private static final int DATABASE_VERSION = 1;
+
+    private static final String ASSETS_DATABASE_PATH = "database/" + DATABASE_NAME;
 
     public WondersSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        setupDatabase(context);
     }
 
-
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        //roda o script do banco
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
     }
 
     @Override
@@ -40,61 +35,34 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
         //roda o script de update
     }
 
-    public static boolean initialize() {
-        boolean ok = true;
-        if (!checkDatabase()) {
+    public static void setupDatabase(Context context) {
+
+        File path = new File(DATABASE_DIRECTORY);
+        if (!path.exists()) {
+            path.mkdirs();
+        }
+
+        File db = new File(DATABASE_PATH);
+        if (!db.exists()) {
+
             try {
-                File dir = new File(DATABASE_DIRECTORY);
+                InputStream in = context.getAssets().open(ASSETS_DATABASE_PATH);
+                FileOutputStream out = new FileOutputStream(db);
 
-                if (!dir.exists()) dir.mkdirs();
+                // Transfer bytes from in to out
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                out.flush();
+                in.close();
+                out.close();
 
-                File f_in = new File(DATABASE_ORIGIN_PATH);
-                File f_out = new File(DATABASE_PATH);
-
-                if (!f_out.exists()) copyFile(f_in, f_out);
             } catch (Exception e) {
-                ok = false;
+                Log.e("WondersSQLiteHelper", e.getMessage());
             }
         }
-        return ok;
-    }
 
-    private static boolean checkDatabase() {
-        SQLiteDatabase checkDB = null;
-        try {
-            checkDB = SQLiteDatabase.openDatabase(DATABASE_PATH, null,
-                    SQLiteDatabase.OPEN_READONLY);
-            checkDB.close();
-        } catch (Exception e) {
-
-        }
-        return checkDB != null;
-    }
-
-    private static void copyFile(File sourceFile, File destFile) throws IOException {
-        if(!destFile.exists()) {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-
-            // previous code: destination.transferFrom(source, 0, source.size());
-            // to avoid infinite loops, should be:
-            long count = 0;
-            long size = source.size();
-            while((count += destination.transferFrom(source, count, size-count))<size);
-        }
-        finally {
-            if(source != null) {
-                source.close();
-            }
-            if(destination != null) {
-                destination.close();
-            }
-        }
     }
 }
