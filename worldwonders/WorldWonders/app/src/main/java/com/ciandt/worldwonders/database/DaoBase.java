@@ -23,7 +23,7 @@ public class DaoBase {
                 String key = cursor.getColumnName(i);
                 switch (cursor.getType(i)) {
                     case AbstractCursor.FIELD_TYPE_INTEGER: row.put(key, cursor.getInt(i)); break;
-                    case AbstractCursor.FIELD_TYPE_FLOAT: row.put(key, cursor.getFloat(i)); break;
+                    case AbstractCursor.FIELD_TYPE_FLOAT: row.put(key, cursor.getDouble(i)); break;
                     case AbstractCursor.FIELD_TYPE_STRING: row.put(key, cursor.getString(i));break;
                     case AbstractCursor.FIELD_TYPE_BLOB: row.put(key, cursor.getBlob(i)); break;
                     case AbstractCursor.FIELD_TYPE_NULL: break;
