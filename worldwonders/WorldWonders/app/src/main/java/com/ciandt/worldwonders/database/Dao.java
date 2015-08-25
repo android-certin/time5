@@ -10,20 +10,20 @@ import java.util.List;
  *
  * @v1 < @v2
  */
-public interface Dao {
-    public List<HashMap<String, Object>> getAll();
+public interface Dao<T> {
+    public List<T> getAll();
 
-    public HashMap<String, Object> getById(int id);
+    public T getById(int id);
 
-    public List<HashMap<String, Object>> search(String word);
+    public List<T> search(String word);
 
 
-    public boolean delete(HashMap<String, Object> args);
+    public boolean delete(T args);
 
-    public boolean update(HashMap<String, Object> values,
-                          HashMap<String, Object> where);
+    public boolean update(T values,
+                          T where);
 
-    public boolean insert(HashMap<String, Object> values);
+    public boolean insert(T values);
 
     public void close();
 }
