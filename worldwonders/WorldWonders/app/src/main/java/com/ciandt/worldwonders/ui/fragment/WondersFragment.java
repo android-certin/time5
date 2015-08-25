@@ -1,7 +1,6 @@
 package com.ciandt.worldwonders.ui.fragment;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.repository.WondersRepository;
 import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
 
 import android.support.annotation.Nullable;
@@ -28,7 +27,7 @@ public class WondersFragment extends android.support.v4.app.Fragment {
         View v = inflater.inflate(R.layout.fragment_wonders, container, false);
 
         viewPager = (ViewPager) v.findViewById(R.id.slide);
-        pagerAdapter = new HighlightPagerAdapter(getActivity().getSupportFragmentManager());
+        pagerAdapter = new HighlightPagerAdapter(getActivity().getSupportFragmentManager(), getContext());
         viewPager.setAdapter(pagerAdapter);
 
         return v;

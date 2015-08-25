@@ -15,7 +15,7 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "wonders.db";
-    private static final String DATABASE_DIRECTORY = "/data/data/com.ciandt.worldwonders/database/";
+    private static final String DATABASE_DIRECTORY = "data/data/com.ciandt.worldwonders/databases/";
     private static final String DATABASE_PATH = DATABASE_DIRECTORY + DATABASE_NAME;
     private static final int DATABASE_VERSION = 1;
 

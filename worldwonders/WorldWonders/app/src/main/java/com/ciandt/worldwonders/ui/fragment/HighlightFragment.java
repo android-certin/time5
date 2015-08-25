@@ -4,7 +4,9 @@ import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.WondersRepository;
+import com.squareup.picasso.Picasso;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,11 +54,12 @@ public class HighlightFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        WondersRepository repository = new WondersRepository(getContext());
-
         ImageView imgWonder = (ImageView) view.findViewById(R.id.fragmanet_world_wonder_img);
         String namePhoto = wonder.photo;
 
-        //int resourceId = Helpers.getRawResourceID(getContext(), namePhoto);
+        int resourceId = Helpers.getRawResourceID(getContext(), namePhoto);
+        Picasso.with(getContext()).
+                load(resourceId).
+                config(Bitmap.Config.RGB_565).into(imgWonder);
     }
 }
