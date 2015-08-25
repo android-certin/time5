@@ -1,6 +1,7 @@
 package com.ciandt.worldwonders.database;
 
 import android.content.Context;
+import android.database.AbstractCursor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -18,8 +19,17 @@ import java.util.List;
 public class WonderDao implements Dao<Wonder> {
     private SQLiteDatabase db;
     private WondersSQLiteHelper dbHelper;
-    
+    private String tableName;
+
+    WonderDao(Context context, String tableName) {
+        this.tableName = tableName;
+        dbHelper = new WondersSQLiteHelper(context);
+        dbHelper.initialize();
+        this.db = dbHelper.getWritableDatabase();
+    }
+
     WonderDao(Context context) {
+        this.tableName = "wonders";
         dbHelper = new WondersSQLiteHelper(context);
         dbHelper.initialize();
         this.db = dbHelper.getWritableDatabase();
@@ -27,22 +37,22 @@ public class WonderDao implements Dao<Wonder> {
 
     @Override
     public List<Wonder> getAll() {
-        String sql = "SELECT * FROM wonders";
+        String sql = "SELECT * FROM " + tableName;
         Cursor cursor = db.rawQuery(sql, null);
 
-        List<Wonder> result = convert(cursor);
+        List<Wonder> result = Wonder.fromListHashMap(convert(cursor));
 
         return result;
     }
 
     @Override
     public Wonder getById(int id) {
-        String sql = "SELECT * FROM wonders WHERE id = ?";
+        String sql = "SELECT * FROM " + tableName + " WHERE id = ?";
 
         String args[] = {String.valueOf(id)};
         Cursor cursor = db.rawQuery(sql, args);
 
-        List<Wonder> result = convert(cursor);
+        List<Wonder> result = Wonder.fromListHashMap(convert(cursor));
 
         if (result.size() > 0) {
             return result.get(0);
@@ -53,37 +63,39 @@ public class WonderDao implements Dao<Wonder> {
 
     @Override
     public List<Wonder> search(String sql) {
-        return convert(db.rawQuery(sql, null));
+        return Wonder.fromListHashMap(convert(db.rawQuery(sql, null)));
     }
 
-    private List<Wonder> convert(Cursor cursor) {
+    private List<HashMap<String, Object>> convert(Cursor cursor) {
         List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
 
         cursor.moveToFirst();
-
         while (cursor.isAfterLast()) {
             int nc = cursor.getColumnCount();
             HashMap<String, Object> row = new HashMap<String, Object>();
 
-            row.put("id", cursor.getInt(cursor.getColumnIndex("id")));
-            row.put("name", cursor.getString(cursor.getColumnIndex("name")));
-            row.put("description", cursor.getString(cursor.getColumnIndex("description")));
-            row.put("url", cursor.getString(cursor.getColumnIndex("url")));
-            row.put("photo", cursor.getString(cursor.getColumnIndex("photo")));
-            row.put("latitude", cursor.getDouble(cursor.getColumnIndex("latitude")));
-            row.put("longitude", cursor.getDouble(cursor.getColumnIndex("longitude")));
+            for (int i = 0; i < nc; ++i) {
+                String key = cursor.getColumnName(i);
+                switch (cursor.getType(i)) {
+                    case AbstractCursor.FIELD_TYPE_INTEGER: row.put(key, cursor.getInt(i)); break;
+                    case AbstractCursor.FIELD_TYPE_FLOAT: row.put(key, cursor.getFloat(i)); break;
+                    case AbstractCursor.FIELD_TYPE_STRING: row.put(key, cursor.getString(i));break;
+                    case AbstractCursor.FIELD_TYPE_BLOB: row.put(key, cursor.getBlob(i)); break;
+                    case AbstractCursor.FIELD_TYPE_NULL: break;
+                    default: row.put(key, cursor.getString(i)); break;
+                }
+            }
 
             result.add(row);
-
             cursor.moveToNext();
         }
 
-        return Wonder.fromListHashMap(result);
+        return result;
     }
 
     @Override
     public boolean delete(Wonder wonder) {
-        String sql = "DELETE FROM wonders WHERE id=?";
+        String sql = "DELETE FROM " + tableName + " WHERE id=?";
         String[] args = { String.valueOf(wonder.id) };
 
         SQLiteStatement statement = db.compileStatement(sql);
@@ -96,7 +108,7 @@ public class WonderDao implements Dao<Wonder> {
     @Override
     public boolean update(Wonder wonder) {
         HashMap<String, Object> values = wonder.toHashMap();
-        String sql = "UPDATE wonders SET ";
+        String sql = "UPDATE " + tableName + " SET ";
         
         int i = 0;
         String[] args = new String[values.size() + 1];
@@ -124,7 +136,7 @@ public class WonderDao implements Dao<Wonder> {
         int n = values.size();
         String[] args = new String[n];
         int i = 0;
-        String sql = "INSERT INTO wonders (";
+        String sql = "INSERT INTO " + tableName + " (";
         for (String key: values.keySet()) {
             if (i > 0) sql += ", ";
             sql += key;

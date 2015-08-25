@@ -33,8 +33,8 @@ public class Wonder implements Serializable {
                 table.get("description").toString(),
                 table.get("url").toString(),
                 table.get("photo").toString(),
-                (int) table.get("longitude"),
-                (int) table.get("latitude"));
+                (double) table.get("longitude"),
+                (double) table.get("latitude"));
     }
 
     public HashMap<String, Object> toHashMap() {
