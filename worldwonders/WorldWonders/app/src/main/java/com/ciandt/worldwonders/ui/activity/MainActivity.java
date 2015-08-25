@@ -13,7 +13,7 @@ import com.ciandt.worldwonders.model.User;
 /**
  * Created by jpimentel on 8/20/15.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     final static String TAG = "MainActivity";
 
