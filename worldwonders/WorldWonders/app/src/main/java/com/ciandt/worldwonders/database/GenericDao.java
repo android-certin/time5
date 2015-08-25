@@ -13,6 +13,10 @@ import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
+ * Eu sei... Tenho de refatorar esse código o HashMap tá feio,
+ * mas no começo eu pensei que o generico fosse no sentido de
+ * construir um sisteminha para abstrair conexões genéricas com
+ * o database.
  */
 public class GenericDao implements Dao<HashMap<String, Object>> {
     private SQLiteDatabase db;

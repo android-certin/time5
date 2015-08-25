@@ -8,6 +8,9 @@ import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
+ * Isso é só um workaround para corrigir o erro de implementação no GenericDao
+ * A solução correta é usar diretamente o Wonder.
+ * Como estou com sono agora, amanhã eu corrijo.
  */
 public class WonderDao  {
     GenericDao dao;
