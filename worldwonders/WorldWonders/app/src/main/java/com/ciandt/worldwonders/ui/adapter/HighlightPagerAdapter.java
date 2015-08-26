@@ -25,9 +25,7 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Wonder wonder = listWonders.get(position);
-        HighlightFragment highlightFragment = HighlightFragment.newInstance(wonder);
-        return highlightFragment;
+        return HighlightFragment.newInstance(listWonders.get(position));
     }
 
     @Override
