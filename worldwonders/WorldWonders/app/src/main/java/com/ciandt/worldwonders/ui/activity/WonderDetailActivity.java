@@ -1,8 +1,10 @@
 package com.ciandt.worldwonders.ui.activity;
 
 import android.graphics.Bitmap;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -15,11 +17,12 @@ import com.squareup.picasso.Picasso;
 
 public class WonderDetailActivity extends AppCompatActivity {
 
-    Wonder wonder;
+    private Wonder wonder;
 
-    ImageView imageView;
-    TextView nameTextView;
-    TextView descriptionTextView;
+    private ImageView imageView;
+    private TextView nameTextView;
+    private TextView descriptionTextView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.wonder_item_image);
         nameTextView = (TextView)findViewById(R.id.wonder_item_name);
         descriptionTextView = (TextView)findViewById(R.id.wonder_item_description);
+        toolbar = (Toolbar)findViewById(R.id.wonder_detail_toolbar);
 
 
         int resourceId = Helpers.getRawResourceID(this, wonder.photo.replace(".jpg", ""));
@@ -40,6 +44,10 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         nameTextView.setText(wonder.name);
         descriptionTextView.setText(wonder.description);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -56,10 +64,8 @@ public class WonderDetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
+
 
         return super.onOptionsItemSelected(item);
     }
