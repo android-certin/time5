@@ -9,6 +9,8 @@ import com.ciandt.worldwonders.repository.WondersRepository;
 import com.ciandt.worldwonders.ui.fragment.HighlightFragment;
 import com.ciandt.worldwonders.model.Wonder;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,21 +18,24 @@ import java.util.List;
  */
 public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
+    private final int LIST_SIZE = 3;
     private List<Wonder> listWonders;
 
     public HighlightPagerAdapter(FragmentManager fm, List<Wonder> listWonders) {
         super(fm);
-        this.listWonders = listWonders;
+        List<Wonder> allListWonders = new ArrayList<>(listWonders);
+        Collections.shuffle(allListWonders);
+        this.listWonders = allListWonders.subList(0, LIST_SIZE);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return HighlightFragment.newInstance(listWonders.get((int) (Math.random() * (listWonders.size()) - 1)));
+        return HighlightFragment.newInstance(listWonders.get(position));
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return LIST_SIZE;
     }
 }
 
