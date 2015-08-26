@@ -61,12 +61,28 @@ public class Dao<T> extends DaoBase {
     }
 
     public boolean delete(T value) {
-        String sql = "DELETE FROM " + tableName + " WHERE id=?";
-        String[] args = { String.valueOf(converter.getId(value)) };
+        HashMap<String, Object> values = converter.toHashMap(value);
+        String sql = "DELETE FROM " + tableName + " WHERE ";
+        int n = values.size() - 1;
+        int i = 0;
+        boolean isFirst = true;
+        String[] args = new String[n];
+
+
+        for (String key: values.keySet()) {
+            if (key.equals("id")) continue;
+            if (!isFirst) {
+                sql += ", ";
+            } else isFirst = false;
+            sql += key + " = ? ";
+            args[i] = values.get(key).toString();
+            ++i;
+        }
 
         SQLiteStatement statement = db.compileStatement(sql);
 
         if (statement == null) return false;
+
 
         statement.bindAllArgsAsStrings(args);
         statement.execute();
@@ -77,7 +93,6 @@ public class Dao<T> extends DaoBase {
     public boolean update(T value) {
         HashMap<String, Object> values = converter.toHashMap(value);
         String sql = "UPDATE " + tableName + " SET ";
-
         int i = 0;
         String[] args = new String[values.size() + 1];
 
@@ -103,14 +118,18 @@ public class Dao<T> extends DaoBase {
 
     public boolean insert(T value) {
         HashMap<String, Object> values = converter.toHashMap(value);
-        int n = values.size();
+        int n = values.size() - 1;
         String[] args = new String[n];
         int i = 0;
+        boolean isFirst = true;
         String sql = "INSERT INTO " + tableName + " (";
         for (String key: values.keySet()) {
-            if (i > 0) sql += ", ";
+            if (key.equals("id")) continue;
+            if (!isFirst) {
+                sql += ", ";
+            } else isFirst = false;
             sql += key;
-            args[i] = values.get(i).toString();
+            args[i] = values.get(key).toString();
             ++i;
         }
         sql += ") VALUES (";

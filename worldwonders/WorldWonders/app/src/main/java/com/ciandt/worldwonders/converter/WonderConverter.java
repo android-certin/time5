@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Created by pmachado on 8/24/15.
  */public class WonderConverter implements ConverterBase<Wonder> {
-
     @Override
     public List<Wonder> fromListHashMap(List<HashMap<String, Object>> listTable) {
         List<Wonder> l = new ArrayList<Wonder>();

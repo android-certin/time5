@@ -5,12 +5,17 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.ciandt.worldwonders.database.Dao;
+import com.ciandt.worldwonders.database.WonderBookmarkDao;
 import com.ciandt.worldwonders.database.WonderDao;
 import com.ciandt.worldwonders.model.Wonder;
+import com.ciandt.worldwonders.model.WonderBookmark;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pmachado on 8/24/15.
@@ -25,16 +30,76 @@ public class WondersRepository  {
     }
 
     @NonNull
+    public void insert(final WonderInsertListener wonderInsertListener, WonderBookmark bookmark) {
+        AsyncTask<WonderBookmark, Void, Boolean> asyncTask = new AsyncTask<WonderBookmark, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(WonderBookmark... params) {
+                WonderBookmark bookmark = params[0];
+                Dao<WonderBookmark> bookmarkDao = new WonderBookmarkDao(context);
+                boolean result = bookmarkDao.insert(bookmark);
+                bookmarkDao.close();
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                wonderInsertListener.onBookmarkInserted(null, result);
+                tasks.remove(this);
+            }
+        };
+
+        tasks.add(asyncTask);
+        asyncTask.execute(bookmark);
+    }
+
+    @NonNull
+    public void delete(final WonderDeleteListener wonderDeleteListener, WonderBookmark bookmark) {
+        AsyncTask<WonderBookmark, Void, Boolean> asyncTask = new AsyncTask<WonderBookmark, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(WonderBookmark... params) {
+                WonderBookmark bookmark = params[0];
+                Dao<WonderBookmark> bookmarkDao = new WonderBookmarkDao(context);
+                boolean result = bookmarkDao.delete(bookmark);
+                bookmarkDao.close();
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(Boolean result) {
+                super.onPostExecute(result);
+                wonderDeleteListener.onBookmarkDeleted(null, result);
+                tasks.remove(this);
+            }
+        };
+
+        tasks.add(asyncTask);
+        asyncTask.execute(bookmark);
+    }
+
+    @NonNull
     public void getAll(final WonderAllListener wonderAllListener) {
         AsyncTask<Void, Void, List<Wonder>> asyncTask = new AsyncTask<Void, Void, List<Wonder>>() {
             @Override
             protected List<Wonder> doInBackground(Void... params) {
-                Dao<Wonder> dao = new WonderDao(context);
-                List<Wonder> result = dao.getAll();
+                Dao<Wonder> wonderDao = new WonderDao(context);
+                Dao<WonderBookmark> bookmarkDao = new WonderBookmarkDao(context);
 
-                Collections.shuffle(result);
+                List<Wonder> result = wonderDao.getAll();
+                List<WonderBookmark> bookmarks = bookmarkDao.getAll();
 
-                dao.close();
+                Set<Integer> wonderMarked = new HashSet<Integer>();
+
+                for (WonderBookmark bookmark: bookmarks) {
+                    wonderMarked.add(bookmark.idWonder);
+                }
+
+                for (Wonder wonder: result) {
+                    wonder.isMarked = wonderMarked.contains(wonder.id);
+                }
+
+                wonderDao.close();
+                bookmarkDao.close();
 
                 return result;
             }
@@ -52,6 +117,14 @@ public class WondersRepository  {
 
     public interface WonderAllListener {
         void onWonderAll(Exception e, List<Wonder> winders);
+    }
+
+    public interface WonderInsertListener {
+        void onBookmarkInserted(Exception e, boolean result);
+    }
+
+    public interface WonderDeleteListener {
+        void onBookmarkDeleted(Exception e, boolean result);
     }
 
     public void cancel() {

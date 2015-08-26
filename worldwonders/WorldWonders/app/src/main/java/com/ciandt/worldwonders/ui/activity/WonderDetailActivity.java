@@ -1,10 +1,13 @@
 package com.ciandt.worldwonders.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -12,9 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.database.WonderBookmarkDao;
 import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
+import com.ciandt.worldwonders.model.WonderBookmark;
+import com.ciandt.worldwonders.repository.WondersRepository;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class WonderDetailActivity extends AppCompatActivity {
 
@@ -71,16 +79,64 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_bookmark:
-                Toast.makeText(this, "Bookmark", Toast.LENGTH_SHORT).show();
+                addBookmark();
                 break;
+
             case R.id.action_direction:
-                Toast.makeText(this, "Direction", Toast.LENGTH_SHORT).show();
+                getDirection();
                 break;
+
             case R.id.action_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
+                shareContent();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addBookmark() {
+        WondersRepository repository = new WondersRepository(this);
+        if (wonder.isMarked) {
+            wonder.isMarked = false;
+            repository.delete(new WondersRepository.WonderDeleteListener() {
+                @Override
+                public void onBookmarkDeleted(Exception e, boolean result) {
+                    Log.i("BOOKMARK", "deleted = " + String.valueOf(result));
+                }
+            }, new WonderBookmark(wonder.id));
+        } else {
+            wonder.isMarked = true;
+            repository.insert(new WondersRepository.WonderInsertListener() {
+                @Override
+                public void onBookmarkInserted(Exception e, boolean result) {
+                    Log.i("BOOKMARK", "inserted = " + String.valueOf(result));
+                }
+            }, new WonderBookmark(wonder.id));
+        }
+    }
+
+    private void shareContent() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TITLE, wonder.name);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, wonder.name);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, wonder.name);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    private void getDirection() {
+        Uri uri = Uri.parse("geo:" +
+                String.valueOf(wonder.latitude) + "," +
+                String.valueOf(wonder.longitude));
+
+        if (uri != null) {
+            Intent sendIntent  = new Intent(Intent.ACTION_VIEW, uri);
+            sendIntent.setPackage("com.google.android.apps.maps");
+            startActivity(sendIntent);
+        } else {
+            Toast.makeText(this, "Desconhecido", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

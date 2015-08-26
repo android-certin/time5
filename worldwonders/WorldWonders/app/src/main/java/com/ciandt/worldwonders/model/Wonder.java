@@ -22,6 +22,7 @@ public class Wonder implements Serializable {
     public String photo;
     public double latitude;
     public double longitude;
+    public boolean isMarked;
 
     public static WonderConverter getConverter() {
         return new WonderConverter();
@@ -35,10 +36,12 @@ public class Wonder implements Serializable {
         this.photo = photo;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.isMarked = false;
     }
 
     public Wonder(String name, int id) {
         this.name = name;
         this.id = id;
+        this.isMarked = false;
     }
 }

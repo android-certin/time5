@@ -47,9 +47,7 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int i) {
         final Wonder wonder = wonderList.get(i);
-
-        String namePhoto = wonder.photo;
-        int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg",""));
+        int resourceId = Helpers.getRawResourceID(context, wonder.photo.replace(".jpg",""));
         Picasso.with(context).
                 load(resourceId).
                 resize(100, 100).
