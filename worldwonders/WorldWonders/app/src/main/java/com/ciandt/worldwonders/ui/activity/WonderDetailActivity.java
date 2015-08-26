@@ -1,6 +1,7 @@
 package com.ciandt.worldwonders.ui.activity;
 
 import android.graphics.Bitmap;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,9 +21,9 @@ public class WonderDetailActivity extends AppCompatActivity {
     private Wonder wonder;
 
     private ImageView imageView;
-    private TextView nameTextView;
     private TextView descriptionTextView;
     private Toolbar toolbar;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +33,25 @@ public class WonderDetailActivity extends AppCompatActivity {
         wonder = (Wonder) getIntent().getSerializableExtra("wonder");
 
         imageView = (ImageView)findViewById(R.id.wonder_item_image);
-        nameTextView = (TextView)findViewById(R.id.wonder_item_name);
         descriptionTextView = (TextView)findViewById(R.id.wonder_item_description);
         toolbar = (Toolbar)findViewById(R.id.wonder_detail_toolbar);
+        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
 
 
         int resourceId = Helpers.getRawResourceID(this, wonder.photo.replace(".jpg", ""));
-        Picasso.with(this).
-                load(resourceId).
-                config(Bitmap.Config.RGB_565).into(imageView);
+        Picasso.with(this)
+                .load(resourceId)
+                .resize(320, 200)
+                .centerCrop()
+                .config(Bitmap.Config.RGB_565).into(imageView);
 
-        nameTextView.setText(wonder.name);
+        collapsingToolbarLayout.setTitle(wonder.name);
+        toolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.primary));
+        collapsingToolbarLayout.setStatusBarScrimColor(getResources().getColor(R.color.primary));
         descriptionTextView.setText(wonder.description);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
