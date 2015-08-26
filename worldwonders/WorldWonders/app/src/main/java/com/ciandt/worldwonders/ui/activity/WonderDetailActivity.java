@@ -29,7 +29,7 @@ public class WonderDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wonder_detail);
 
-        wonder = (Wonder)getIntent().getSerializableExtra("wonder");
+        wonder = (Wonder) getIntent().getSerializableExtra("wonder");
 
         imageView = (ImageView)findViewById(R.id.wonder_item_image);
         nameTextView = (TextView)findViewById(R.id.wonder_item_name);

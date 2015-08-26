@@ -16,6 +16,7 @@ import com.ciandt.worldwonders.model.User;
 public class MainActivity extends BaseActivity {
 
     final static String TAG = "MainActivity";
+    final static String IS_LOGGED = "isLogged";
     private boolean isLogged = false;
 
     @Override
@@ -25,7 +26,36 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (isLogged) {
+            addWondersFragment();
+        } else {
+            addLoginFragment();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(IS_LOGGED, isLogged);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        isLogged = savedInstanceState.getBoolean(IS_LOGGED);
+    }
+
+    private void addWondersFragment() {
+        WondersFragment wondersFragment = new WondersFragment();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameMain, wondersFragment)
+                .commit();
+    }
+
+    private void addLoginFragment() {
         LoginFragment loginFragment = new LoginFragment();
 
         loginFragment.setOnLoginListener(
@@ -40,34 +70,8 @@ public class MainActivity extends BaseActivity {
                 }
         );
 
-        if(savedInstanceState != null && savedInstanceState.containsKey("isLogged")) {
-            isLogged = savedInstanceState.getBoolean("isLogged");
-        }
-
-        if (isLogged) {
-            addWondersFragment();
-
-        } else {
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frameMain, loginFragment)
-                    .commit();
-
-        }
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putBoolean("isLogged", isLogged);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    public void addWondersFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        WondersFragment wondersFragment = new WondersFragment();
-
-        fragmentManager.beginTransaction()
-                .replace(R.id.frameMain, wondersFragment)
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameMain, loginFragment)
                 .commit();
     }
 
