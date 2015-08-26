@@ -3,12 +3,13 @@ package com.ciandt.worldwonders.ui.fragment;
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.repository.WondersRepository;
+import com.ciandt.worldwonders.ui.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
 import com.ciandt.worldwonders.ui.adapter.WonderItemAdapter;
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -59,6 +60,14 @@ public class WondersFragment extends Fragment {
                 viewPager.setAdapter(pagerAdapter);
 
                 wonderItemAdapter = new WonderItemAdapter(wonders);
+                wonderItemAdapter.setOnSelectWonderListener(new WonderItemAdapter.OnSelectWonderListener() {
+                    @Override
+                    public void onSelectWonder(Wonder wonder) {
+                        Intent intent = new Intent(getContext(), WonderDetailActivity.class);
+                        intent.putExtra("wonder", wonder);
+                        getContext().startActivity(intent);
+                    }
+                });
                 recyclerView.setAdapter(wonderItemAdapter);
             }
         });

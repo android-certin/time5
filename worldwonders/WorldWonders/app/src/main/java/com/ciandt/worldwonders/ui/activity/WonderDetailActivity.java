@@ -54,9 +54,6 @@ public class WonderDetailActivity extends AppCompatActivity {
                 .config(Bitmap.Config.RGB_565).into(imageView);
 
         collapsingToolbarLayout.setTitle(wonder.name);
-        toolbar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.primary));
-        collapsingToolbarLayout.setStatusBarScrimColor(getResources().getColor(R.color.primary));
         descriptionTextView.setText(wonder.description);
 
         setSupportActionBar(toolbar);

@@ -8,17 +8,15 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_height="240dp"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
+            style="@style/AppTheme.Widget.CollapsingToolbarLayout"
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleMarginEnd="64dp"
             android:fitsSystemWindows="true">
             <ImageView
                 android:layout_width="match_parent"
@@ -30,11 +28,10 @@
                 app:layout_collapseMode="parallax"
                 />
             <android.support.v7.widget.Toolbar
+                style="@style/AppTheme.Widget.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/wonder_detail_toolbar"
-                android:background="@color/primary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
             />
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -44,9 +41,10 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <TextView
+            style="@style/AppTheme.Widget.TextView.LongText"
+            android:text="teste"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/wonder_item_description"
