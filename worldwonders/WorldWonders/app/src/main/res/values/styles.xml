@@ -4,22 +4,31 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimaryLight">@color/primary_light</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/primary_text</item>
-        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorSecondary">?attr/colorPrimaryLight</item>
         <item name="toolbarStyle">@style/AppTheme.Widget.Toolbar</item>
         <item name="android:buttonStyle">@style/AppTheme.Widget.Button</item>
         <item name="android:editTextStyle">@style/AppTheme.Widget.EditText</item>
         <item name="android:textAppearanceButton">@style/AppTheme.TextApperance.Button</item>
     </style>
 
-    <style name="AppTheme.Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="android:background">?attr/colorPrimary</item>
+    <style name="AppTheme.Widget.Toolbar.TextAppearance" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">?attr/colorPrimaryLight</item>
     </style>
 
-    <style name="AppTheme.Widget.Toolbar.Transparent" parent="@style/AppTheme.Widget.Toolbar">
+    <style name="AppTheme.Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:background">@android:color/transparent</item>
+        <item name="titleTextAppearance">@style/AppTheme.Widget.Toolbar.TextAppearance</item>
+    </style>
+
+    <style name="AppTheme.Widget.CollapsingToolbarLayout" parent="Widget.Design.CollapsingToolbar">
+        <item name="collapsedTitleTextAppearance">@style/AppTheme.Widget.Toolbar.TextAppearance</item>
+        <item name="expandedTitleTextAppearance">@style/AppTheme.Widget.Toolbar.TextAppearance</item>
+        <item name="contentScrim">?attr/colorPrimary</item>
+        <item name="statusBarScrim">?attr/colorPrimary</item>
     </style>
 
     <style name="AppTheme.Widget.Button" parent="Widget.AppCompat.Button">
@@ -36,5 +45,9 @@
 
     <style name="AppTheme.Widget.EditText" parent="Widget.AppCompat.EditText">
         <item name="fontPath">fonts/Roboto-Medium.ttf</item>
+    </style>
+
+    <style name="AppTheme.Widget.TextView.LongText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:padding">10dp</item>
     </style>
 </resources>
