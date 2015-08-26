@@ -30,7 +30,7 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return listWonders.size();
     }
 }
 
