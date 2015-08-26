@@ -62,19 +62,15 @@ public class Dao<T> extends DaoBase {
 
     public boolean delete(T value) {
         HashMap<String, Object> values = converter.toHashMap(value);
-        String sql = "DELETE FROM " + tableName + " WHERE ";
+        String sql = "DELETE FROM " + tableName + " WHERE 1 = 1 ";
         int n = values.size() - 1;
         int i = 0;
-        boolean isFirst = true;
         String[] args = new String[n];
 
 
         for (String key: values.keySet()) {
             if (key.equals("id")) continue;
-            if (!isFirst) {
-                sql += ", ";
-            } else isFirst = false;
-            sql += key + " = ? ";
+            sql += " AND " +  key + " = ? ";
             args[i] = values.get(key).toString();
             ++i;
         }
