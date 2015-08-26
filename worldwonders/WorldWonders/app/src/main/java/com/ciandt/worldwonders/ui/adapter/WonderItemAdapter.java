@@ -4,6 +4,7 @@ package com.ciandt.worldwonders.ui.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
+import com.ciandt.worldwonders.ui.activity.WonderDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,16 +45,27 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int i) {
-        Wonder wonder = wonderList.get(i);
+    public void onBindViewHolder(final ViewHolder holder, int i) {
+        final Wonder wonder = wonderList.get(i);
 
         String namePhoto = wonder.photo;
         int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg",""));
         Picasso.with(context).
                 load(resourceId).
-                config(Bitmap.Config.RGB_565).into(holder.image);
+                resize(100, 100).
+                centerCrop().
+                config(Bitmap.Config.RGB_565).
+                into(holder.image);
 
         holder.text.setText(wonder.name);
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), WonderDetailActivity.class);
+                intent.putExtra("wonder", wonder);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -64,35 +77,15 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
 
         public TextView text;
         public ImageView image;
+        public View view;
 
         public ViewHolder(View v) {
             super(v);
 
+
             this.text  = (TextView) v.findViewById(R.id.wonder_item_nome);
             this.image = (ImageView) v.findViewById(R.id.wonder_item_imagem);
-
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                    builder.setTitle("Titulo");
-                    builder.setMessage("Qualifique este software");
-                    builder.setPositiveButton("Positivo", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface arg0, int arg1) {
-                        }
-                    });
-
-                    builder.setNegativeButton("Negativo", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface arg0, int arg1) {
-                        }
-                    });
-
-                    AlertDialog alerta = builder.create();
-                    alerta.show();
-
-                }
-            });
+            this.view = v;
 
         }
     }

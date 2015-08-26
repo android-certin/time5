@@ -10,4 +10,8 @@
     <string name="fire">OK</string>
     <string name="cancel">Cancelar</string>
     <string name="dialog_fire_missiles">Dialogo</string>
+    <string name="title_activity_wonder_detail">WonderDetailActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -15,7 +15,7 @@ public class WorldWondersApp extends Application {
         super.onCreate();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Roboto-Italic.ttf")
+                .setDefaultFontPath("fonts/Roboto-Thin.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 

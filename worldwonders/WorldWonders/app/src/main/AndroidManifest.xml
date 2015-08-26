@@ -24,6 +24,10 @@
             android:name=".ui.activity.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+        <activity
+            android:name=".ui.activity.WonderDetailActivity"
+            android:label="@string/title_activity_wonder_detail" >
+        </activity>
     </application>
 
 </manifest>

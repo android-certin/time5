@@ -25,12 +25,12 @@ public class HighlightPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return HighlightFragment.newInstance(listWonders.get(position));
+        return HighlightFragment.newInstance(listWonders.get((int) (Math.random() * (listWonders.size()) - 1)));
     }
 
     @Override
     public int getCount() {
-        return listWonders.size();
+        return 3;
     }
 }
 
