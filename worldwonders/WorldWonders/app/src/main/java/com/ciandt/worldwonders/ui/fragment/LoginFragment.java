@@ -36,7 +36,7 @@ public class LoginFragment extends android.support.v4.app.Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login, container, false);
         loginButton = (Button) view.findViewById(R.id.btn_login);
         signupButton = (Button) view.findViewById(R.id.btn_signup);

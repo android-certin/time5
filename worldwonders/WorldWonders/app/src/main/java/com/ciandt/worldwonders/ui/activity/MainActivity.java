@@ -16,6 +16,7 @@ import com.ciandt.worldwonders.model.User;
 public class MainActivity extends BaseActivity {
 
     final static String TAG = "MainActivity";
+    private boolean isLogged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,18 +33,34 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onLogin(User user) {
                         if (user.authenticate()) {
+                            isLogged = true;
                             addWondersFragment();
                         }
                     }
                 }
         );
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.frameMain, loginFragment)
-                .commit();
+        if(savedInstanceState != null && savedInstanceState.containsKey("isLogged")) {
+            isLogged = savedInstanceState.getBoolean("isLogged");
+        }
+
+        if (isLogged) {
+            addWondersFragment();
+
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frameMain, loginFragment)
+                    .commit();
+
+        }
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("isLogged", isLogged);
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     public void addWondersFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();

@@ -1,7 +1,6 @@
 package com.ciandt.worldwonders.ui.activity;
 
 import android.graphics.Bitmap;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helper.Helpers;
@@ -64,8 +64,17 @@ public class WonderDetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-
+        switch (id) {
+            case R.id.action_bookmark:
+                Toast.makeText(this, "Bookmark", Toast.LENGTH_SHORT);
+                break;
+            case R.id.action_direction:
+                Toast.makeText(this, "Direction", Toast.LENGTH_SHORT);
+                break;
+            case R.id.action_share:
+                Toast.makeText(this, "Share", Toast.LENGTH_SHORT);
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
