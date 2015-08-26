@@ -66,13 +66,13 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_bookmark:
-                Toast.makeText(this, "Bookmark", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Bookmark", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_direction:
-                Toast.makeText(this, "Direction", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Direction", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_share:
-                Toast.makeText(this, "Share", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
                 break;
         }
 
