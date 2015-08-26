@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -15,14 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.database.WonderBookmarkDao;
 import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
 import com.ciandt.worldwonders.repository.WondersRepository;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 public class WonderDetailActivity extends AppCompatActivity {
 
@@ -32,6 +28,7 @@ public class WonderDetailActivity extends AppCompatActivity {
     private TextView descriptionTextView;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private MenuItem bookmarkItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +61,8 @@ public class WonderDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_wonder_detail, menu);
+        bookmarkItem = menu.findItem(R.id.action_bookmark);
+        updateBookmarkIcon();
         return true;
     }
 
@@ -98,7 +97,7 @@ public class WonderDetailActivity extends AppCompatActivity {
             repository.delete(new WondersRepository.WonderDeleteListener() {
                 @Override
                 public void onBookmarkDeleted(Exception e, boolean result) {
-                    Log.i("BOOKMARK", "deleted = " + String.valueOf(result));
+                    updateBookmarkIcon();
                 }
             }, new WonderBookmark(wonder.id));
         } else {
@@ -106,9 +105,18 @@ public class WonderDetailActivity extends AppCompatActivity {
             repository.insert(new WondersRepository.WonderInsertListener() {
                 @Override
                 public void onBookmarkInserted(Exception e, boolean result) {
-                    Log.i("BOOKMARK", "inserted = " + String.valueOf(result));
+                    updateBookmarkIcon();
                 }
             }, new WonderBookmark(wonder.id));
+        }
+    }
+
+    private void updateBookmarkIcon() {
+        if (wonder.isMarked) {
+            bookmarkItem.setIcon(R.drawable.ic_bookmark_white_24dp);
+        }
+        else {
+            bookmarkItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
         }
     }
 
@@ -129,7 +137,6 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         if (uri != null) {
             Intent sendIntent  = new Intent(Intent.ACTION_VIEW, uri);
-            sendIntent.setPackage("com.google.android.apps.maps");
             startActivity(sendIntent);
         } else {
             Toast.makeText(this, "Desconhecido", Toast.LENGTH_SHORT).show();
