@@ -42,12 +42,26 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/wonder_item_description"
-            style="@style/AppTheme.Widget.TextView.LongText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="teste" />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/wonder_item_description"
+                style="@style/AppTheme.Widget.TextView.LongText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="teste" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="Fonte: wikipedia"
+                android:id="@+id/source"
+                android:layout_margin="20dp"
+                android:textSize="13dp"
+                android:textColor="#0000FF"
+                />
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
 

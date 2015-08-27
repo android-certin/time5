@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
 import com.ciandt.worldwonders.protocol.Protocol;
 import com.ciandt.worldwonders.repository.WondersRepository;
+import com.ciandt.worldwonders.ui.fragment.SourceFragment;
 import com.squareup.picasso.Picasso;
 
 public class WonderDetailActivity extends AppCompatActivity {
@@ -30,6 +32,7 @@ public class WonderDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private MenuItem bookmarkItem;
+    private TextView sourceTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,14 @@ public class WonderDetailActivity extends AppCompatActivity {
         descriptionTextView = (TextView) findViewById(R.id.wonder_item_description);
         toolbar = (Toolbar) findViewById(R.id.wonder_detail_toolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        sourceTextView = (TextView) findViewById(R.id.source);
 
+        sourceTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SourceFragment.show(wonder, WonderDetailActivity.this.getSupportFragmentManager());
+            }
+        });
 
         int resourceId = Helpers.getRawResourceID(this, wonder.photo.replace(".jpg", ""));
         Picasso.with(this)
