@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.protocol.Protocol;
+import com.ciandt.worldwonders.repository.BaseRepository;
 import com.ciandt.worldwonders.repository.WondersRepository;
 import com.ciandt.worldwonders.ui.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
@@ -52,9 +53,9 @@ public class WondersFragment extends Fragment {
         final ProgressFragment progressFragment = ProgressFragment.show(getFragmentManager());
 
         WondersRepository repository = new WondersRepository(getContext());
-        repository.getAll(new WondersRepository.WonderAllListener() {
+        repository.getAll(new BaseRepository.OnGetAllListener<Wonder>() {
             @Override
-            public void onWonderAll(Exception e, List<Wonder> wonders) {
+            public void onGetAll(Exception e, List<Wonder> wonders) {
                 pagerAdapter = new HighlightPagerAdapter(getFragmentManager(), wonders);
                 viewPager.setAdapter(pagerAdapter);
 

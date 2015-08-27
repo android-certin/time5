@@ -5,26 +5,22 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.ciandt.worldwonders.database.Dao;
-import com.ciandt.worldwonders.database.WonderBookmarkDao;
-import com.ciandt.worldwonders.database.WonderDao;
-import com.ciandt.worldwonders.model.Wonder;
-import com.ciandt.worldwonders.model.WonderBookmark;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by pmachado on 8/27/15.
  */
 public class BaseRepository <T> {
-    private Context context;
-    private List<AsyncTask> tasks;
-/*
-    public BaseRepository(Context context) {
+    protected Context context;
+    protected Dao<T> dao;
+    protected List<AsyncTask> tasks;
+
+    public BaseRepository(Context context, Dao<T> dao) {
         this.context = context;
         tasks = new ArrayList<>();
+        this.dao = dao;
     }
 
     @NonNull
@@ -32,11 +28,7 @@ public class BaseRepository <T> {
         AsyncTask<T, Void, Boolean> asyncTask = new AsyncTask<T, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(T... params) {
-                T bookmark = params[0];
-                Dao<T> dao = new Dao<T>(context);
-                boolean result = dao.insert(data);
-                dao.close();
-                return result;
+                return insert(params[0]);
             }
 
             @Override
@@ -51,66 +43,60 @@ public class BaseRepository <T> {
         asyncTask.execute(data);
     }
 
+    protected Boolean insert(T data) {
+        Boolean result = dao.insert(data);
+        return result;
+    }
+
     @NonNull
-    public void delete(final WonderDeleteListener wonderDeleteListener, WonderBookmark bookmark) {
-        AsyncTask<WonderBookmark, Void, Boolean> asyncTask = new AsyncTask<WonderBookmark, Void, Boolean>() {
+    public void delete(final OnDeleteListener deleteListener, T data) {
+        AsyncTask<T, Void, Boolean> asyncTask = new AsyncTask<T, Void, Boolean>() {
             @Override
-            protected Boolean doInBackground(WonderBookmark... params) {
-                WonderBookmark bookmark = params[0];
-                Dao<WonderBookmark> bookmarkDao = new WonderBookmarkDao(context);
-                boolean result = bookmarkDao.delete(bookmark);
-                bookmarkDao.close();
-                return result;
+            protected Boolean doInBackground(T... params) {
+                return delete(params[0]);
             }
 
             @Override
             protected void onPostExecute(Boolean result) {
                 super.onPostExecute(result);
-                wonderDeleteListener.onBookmarkDeleted(null, result);
+                deleteListener.onDeleted(null, result);
                 tasks.remove(this);
             }
         };
 
         tasks.add(asyncTask);
-        asyncTask.execute(bookmark);
+        asyncTask.execute(data);
+    }
+
+    protected Boolean delete(T data) {
+        Boolean result = dao.delete(data);
+        dao.close();
+        return result;
     }
 
     @NonNull
-    public void getAll(final WonderAllListener wonderAllListener) {
-        AsyncTask<Void, Void, List<Wonder>> asyncTask = new AsyncTask<Void, Void, List<Wonder>>() {
+    public void getAll(final OnGetAllListener getAllListener) {
+        AsyncTask<Void, Void, List<T>> asyncTask = new AsyncTask<Void, Void, List<T>>() {
             @Override
-            protected List<Wonder> doInBackground(Void... params) {
-                Dao<Wonder> wonderDao = new WonderDao(context);
-                Dao<WonderBookmark> bookmarkDao = new WonderBookmarkDao(context);
-
-                List<Wonder> result = wonderDao.getAll();
-                List<WonderBookmark> bookmarks = bookmarkDao.getAll();
-
-                Set<Integer> wonderMarked = new HashSet<>();
-
-                for (WonderBookmark bookmark : bookmarks) {
-                    wonderMarked.add(bookmark.idWonder);
-                }
-
-                for (Wonder wonder : result) {
-                    wonder.isMarked = wonderMarked.contains(wonder.id);
-                }
-
-                wonderDao.close();
-                bookmarkDao.close();
-
-                return result;
+            protected List<T> doInBackground(Void... params) {
+                return getAll();
             }
 
             @Override
-            protected void onPostExecute(List<Wonder> wonders) {
-                super.onPostExecute(wonders);
-                wonderAllListener.onWonderAll(null, wonders);
+            protected void onPostExecute(List<T> data) {
+                super.onPostExecute(data);
+                getAllListener.onGetAll(null, data);
                 tasks.remove(this);
             }
         };
         tasks.add(asyncTask);
         asyncTask.execute();
+    }
+
+    protected List<T> getAll() {
+        List<T> result = dao.getAll();
+        dao.close();
+        return result;
     }
 
     public void cancel() {
@@ -132,5 +118,4 @@ public class BaseRepository <T> {
     public interface OnDeleteListener {
         void onDeleted(Exception e, boolean result);
     }
-    */
 }
