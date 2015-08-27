@@ -2,6 +2,7 @@ package com.ciandt.worldwonders.ui.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,11 +25,23 @@ import java.util.List;
 public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.ViewHolder> {
 
     private List<Wonder> wonderList;
+    private HashMap<Integer, Integer> wonderMap;
     private Context context;
     private OnSelectWonderListener onSelectWonderListener;
 
+    public void updateWonder(Wonder wonder) {
+        int p = wonderMap.get(wonder.id);
+        wonderList.get(p).isMarked = wonder.isMarked;
+    }
+
     public WonderItemAdapter(List<Wonder> wonderList) {
         this.wonderList = wonderList;
+        wonderMap = new HashMap<>();
+        int i = 0;
+        for (Wonder w: wonderList) {
+            wonderMap.put(w.id, i);
+            ++i;
+        }
     }
 
     public void setOnSelectWonderListener(OnSelectWonderListener onSelectWonderListener) {
@@ -91,6 +105,6 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
     }
 
     public interface OnSelectWonderListener {
-        public void onSelectWonder(Wonder wonder);
+        void onSelectWonder(Wonder wonder);
     }
 }

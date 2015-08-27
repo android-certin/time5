@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helper.Helpers;
+import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
+import com.ciandt.worldwonders.protocol.Protocol;
 import com.ciandt.worldwonders.repository.WondersRepository;
 import com.squareup.picasso.Picasso;
 
@@ -98,6 +100,11 @@ public class WonderDetailActivity extends AppCompatActivity {
                 @Override
                 public void onBookmarkDeleted(Exception e, boolean result) {
                     updateBookmarkIcon();
+
+                    Intent intent = new Intent();
+
+                    intent.putExtra("wonder", wonder);
+                    setResult(Protocol.UPDATE_BOOKMARK, intent);
                 }
             }, new WonderBookmark(wonder.id));
         } else {
@@ -106,6 +113,11 @@ public class WonderDetailActivity extends AppCompatActivity {
                 @Override
                 public void onBookmarkInserted(Exception e, boolean result) {
                     updateBookmarkIcon();
+
+                    Intent intent = new Intent();
+
+                    intent.putExtra("wonder", wonder);
+                    setResult(Protocol.UPDATE_BOOKMARK, intent);
                 }
             }, new WonderBookmark(wonder.id));
         }

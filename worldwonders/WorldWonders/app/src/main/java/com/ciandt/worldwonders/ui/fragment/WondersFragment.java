@@ -1,7 +1,9 @@
 package com.ciandt.worldwonders.ui.fragment;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.model.Wonder;
+import com.ciandt.worldwonders.protocol.Protocol;
 import com.ciandt.worldwonders.repository.WondersRepository;
 import com.ciandt.worldwonders.ui.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
@@ -23,7 +25,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class WondersFragment extends Fragment {
-
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
 
@@ -38,9 +39,7 @@ public class WondersFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_wonders, container, false);
-
-        return v;
+        return inflater.inflate(R.layout.fragment_wonders, container, false);
     }
 
     @Override
@@ -65,11 +64,25 @@ public class WondersFragment extends Fragment {
                     public void onSelectWonder(Wonder wonder) {
                         Intent intent = new Intent(getContext(), WonderDetailActivity.class);
                         intent.putExtra("wonder", wonder);
-                        getContext().startActivity(intent);
+                        startActivityForResult(intent, Protocol.UPDATE_BOOKMARK);
                     }
                 });
                 recyclerView.setAdapter(wonderItemAdapter);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case Protocol.UPDATE_BOOKMARK:
+                if (data != null && resultCode == Protocol.UPDATE_BOOKMARK) {
+                    Wonder w = (Wonder) data.getSerializableExtra("wonder");
+                    wonderItemAdapter.updateWonder(w);
+                }
+                break;
+        }
     }
 }
