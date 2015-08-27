@@ -48,7 +48,6 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
     private TextView descriptionTextView;
     public Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private MenuItem bookmarkItem;
     private TextView sourceTextView;
 
     public static WonderDetailFragment newInstance(Wonder wonder) {
@@ -72,7 +71,19 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_wonder_detail, container, false);
+        return inflater.inflate(R.layout.fragment_wonder_detail, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_wonder_detail, menu);
+        updateBookmarkIcon(menu.findItem(R.id.action_bookmark));
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         imageView = (ImageView) view.findViewById(R.id.wonder_item_image);
         descriptionTextView = (TextView) view.findViewById(R.id.wonder_item_description);
@@ -101,21 +112,6 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
         if (!Helpers.isTablet(getContext()))
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_wonder_detail, menu);
-        bookmarkItem = menu.findItem(R.id.action_bookmark);
-        updateBookmarkIcon();
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -124,7 +120,7 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
 
         switch (id) {
             case R.id.action_bookmark:
-                addBookmark();
+                addBookmark(item);
                 break;
 
             case R.id.action_direction:
@@ -139,7 +135,8 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void addBookmark() {
+    private void addBookmark(MenuItem menuItem) {
+        final MenuItem item = menuItem;
         BaseRepository<WonderBookmark> repository =
                 new BaseRepository<>(new WonderBookmarkDao(getContext()));
         if (wonder.isMarked) {
@@ -147,7 +144,7 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
             repository.delete(new BaseRepository.OnDeleteListener() {
                 @Override
                 public void onDeleted(Exception e, boolean result) {
-                    updateBookmarkIcon();
+                    updateBookmarkIcon(item);
 
                     if (onBookmarkListener != null) {
                         onBookmarkListener.onBookmarked(wonder);
@@ -159,7 +156,7 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
             repository.insert(new BaseRepository.OnInsertListener() {
                 @Override
                 public void onInserted(Exception e, boolean result) {
-                    updateBookmarkIcon();
+                    updateBookmarkIcon(item);
 
                     if (onBookmarkListener != null) {
                         onBookmarkListener.onBookmarked(wonder);
@@ -169,11 +166,11 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
         }
     }
 
-    private void updateBookmarkIcon() {
+    private void updateBookmarkIcon(MenuItem item) {
         if (wonder.isMarked) {
-            bookmarkItem.setIcon(R.drawable.ic_bookmark_white_24dp);
+            item.setIcon(R.drawable.ic_bookmark_white_24dp);
         } else {
-            bookmarkItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
+            item.setIcon(R.drawable.ic_bookmark_border_white_24dp);
         }
     }
 
