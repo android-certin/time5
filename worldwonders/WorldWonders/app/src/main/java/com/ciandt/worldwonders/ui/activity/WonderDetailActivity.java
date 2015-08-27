@@ -1,168 +1,42 @@
 package com.ciandt.worldwonders.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.database.WonderBookmarkDao;
-import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
-import com.ciandt.worldwonders.model.WonderBookmark;
 import com.ciandt.worldwonders.protocol.Protocol;
-import com.ciandt.worldwonders.repository.BaseRepository;
-import com.ciandt.worldwonders.ui.fragment.SourceFragment;
-import com.squareup.picasso.Picasso;
+import com.ciandt.worldwonders.ui.fragment.WonderDetailFragment;
 
 public class WonderDetailActivity extends AppCompatActivity {
-
-    private Wonder wonder;
-
-    private ImageView imageView;
-    private TextView descriptionTextView;
-    private Toolbar toolbar;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private MenuItem bookmarkItem;
-    private TextView sourceTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wonder_detail);
 
-        wonder = (Wonder) getIntent().getSerializableExtra("wonder");
+        Wonder wonder = (Wonder) getIntent().getSerializableExtra("wonder");
 
-        imageView = (ImageView) findViewById(R.id.wonder_item_image);
-        descriptionTextView = (TextView) findViewById(R.id.wonder_item_description);
-        toolbar = (Toolbar) findViewById(R.id.wonder_detail_toolbar);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        sourceTextView = (TextView) findViewById(R.id.source);
+        WonderDetailFragment wonderDetail = WonderDetailFragment.newInstance(wonder);
 
-        sourceTextView.setOnClickListener(new View.OnClickListener() {
+
+        wonderDetail.setOnBookmarkListener(new WonderDetailFragment.OnBookmarkListener() {
             @Override
-            public void onClick(View v) {
-                SourceFragment.show(wonder, WonderDetailActivity.this.getSupportFragmentManager());
+            public void onBookmarked(Wonder w) {
+                Intent intent = new Intent();
+
+                intent.putExtra("wonder", w);
+                setResult(Protocol.UPDATE_BOOKMARK, intent);
             }
         });
 
-        int resourceId = Helpers.getRawResourceID(this, wonder.photo.replace(".jpg", ""));
-        Picasso.with(this)
-                .load(resourceId)
-                .resize(320, 200)
-                .centerCrop()
-                .config(Bitmap.Config.RGB_565).into(imageView);
-
-        collapsingToolbarLayout.setTitle(wonder.name);
-        descriptionTextView.setText(wonder.description);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.detailContainer, wonderDetail)
+                .commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_wonder_detail, menu);
-        bookmarkItem = menu.findItem(R.id.action_bookmark);
-        updateBookmarkIcon();
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_bookmark:
-                addBookmark();
-                break;
-
-            case R.id.action_direction:
-                getDirection();
-                break;
-
-            case R.id.action_share:
-                shareContent();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void addBookmark() {
-        BaseRepository<WonderBookmark> repository =
-                new BaseRepository<>(new WonderBookmarkDao(this));
-        if (wonder.isMarked) {
-            wonder.isMarked = false;
-            repository.delete(new BaseRepository.OnDeleteListener() {
-                @Override
-                public void onDeleted(Exception e, boolean result) {
-                    updateBookmarkIcon();
-
-                    Intent intent = new Intent();
-
-                    intent.putExtra("wonder", wonder);
-                    setResult(Protocol.UPDATE_BOOKMARK, intent);
-                }
-            }, new WonderBookmark(wonder.id));
-        } else {
-            wonder.isMarked = true;
-            repository.insert(new BaseRepository.OnInsertListener() {
-                @Override
-                public void onInserted(Exception e, boolean result) {
-                    updateBookmarkIcon();
-
-                    Intent intent = new Intent();
-
-                    intent.putExtra("wonder", wonder);
-                    setResult(Protocol.UPDATE_BOOKMARK, intent);
-                }
-            }, new WonderBookmark(wonder.id));
-        }
-    }
-
-    private void updateBookmarkIcon() {
-        if (wonder.isMarked) {
-            bookmarkItem.setIcon(R.drawable.ic_bookmark_white_24dp);
-        } else {
-            bookmarkItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
-        }
-    }
-
-    private void shareContent() {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TITLE, wonder.name);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, wonder.name);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, wonder.name);
-        sendIntent.setType("text/plain");
-        startActivity(sendIntent);
-    }
-
-    private void getDirection() {
-        Uri uri = Uri.parse("geo:" +
-                String.valueOf(wonder.latitude) + "," +
-                String.valueOf(wonder.longitude));
-
-        if (uri != null) {
-            try {
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(sendIntent);
-            } catch (Exception e) {
-                Toast.makeText(this, "uri desconhecida!", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "Desconhecido", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 }
