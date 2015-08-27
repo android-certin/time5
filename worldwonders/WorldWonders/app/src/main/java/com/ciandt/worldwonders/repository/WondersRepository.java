@@ -41,6 +41,11 @@ public class WondersRepository extends BaseRepository<Wonder> {
         bookmarkDao.close();
         dao.close();
 
+        try {
+            Thread.sleep(10000);
+        } catch (Exception e) {
+        }
+
         return result;
     }
 }
