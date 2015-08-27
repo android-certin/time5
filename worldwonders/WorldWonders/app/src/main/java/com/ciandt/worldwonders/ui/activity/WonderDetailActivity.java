@@ -15,11 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.database.WonderBookmarkDao;
 import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
 import com.ciandt.worldwonders.protocol.Protocol;
-import com.ciandt.worldwonders.repository.WondersRepository;
+import com.ciandt.worldwonders.repository.BaseRepository;
 import com.ciandt.worldwonders.ui.fragment.SourceFragment;
 import com.squareup.picasso.Picasso;
 
@@ -98,12 +99,13 @@ public class WonderDetailActivity extends AppCompatActivity {
     }
 
     private void addBookmark() {
-        WondersRepository repository = new WondersRepository(this);
+        BaseRepository<WonderBookmark> repository = new BaseRepository<>(this,
+                new WonderBookmarkDao(this));
         if (wonder.isMarked) {
             wonder.isMarked = false;
-            repository.delete(new WondersRepository.WonderDeleteListener() {
+            repository.delete(new BaseRepository.OnDeleteListener() {
                 @Override
-                public void onBookmarkDeleted(Exception e, boolean result) {
+                public void onDeleted(Exception e, boolean result) {
                     updateBookmarkIcon();
 
                     Intent intent = new Intent();
@@ -114,9 +116,9 @@ public class WonderDetailActivity extends AppCompatActivity {
             }, new WonderBookmark(wonder.id));
         } else {
             wonder.isMarked = true;
-            repository.insert(new WondersRepository.WonderInsertListener() {
+            repository.insert(new BaseRepository.OnInsertListener() {
                 @Override
-                public void onBookmarkInserted(Exception e, boolean result) {
+                public void onInserted(Exception e, boolean result) {
                     updateBookmarkIcon();
 
                     Intent intent = new Intent();
