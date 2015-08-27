@@ -2,25 +2,15 @@ package com.ciandt.worldwonders.converter;
 
 import com.ciandt.worldwonders.model.Wonder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by pmachado on 8/24/15.
- */public class WonderConverter implements ConverterBase<Wonder> {
-    @Override
-    public List<Wonder> fromListHashMap(List<HashMap<String, Object>> listTable) {
-        List<Wonder> l = new ArrayList<Wonder>();
-        for (HashMap<String, Object> t: listTable) {
-            l.add(fromHashMap(t));
-        }
-        return l;
-    }
-
+ */
+public class WonderConverter extends ConverterBase<Wonder> {
     @Override
     public HashMap<String, Object> toHashMap(Wonder v) {
-        HashMap<String, Object> m = new HashMap<String, Object>();
+        HashMap<String, Object> m = new HashMap<>();
         m.put("name", v.name);
         m.put("id", v.id);
         m.put("description", v.description);

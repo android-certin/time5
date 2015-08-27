@@ -3,7 +3,6 @@ package com.ciandt.worldwonders.database;
 import android.content.Context;
 
 import com.ciandt.worldwonders.helper.WondersSQLiteHelper;
-import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
 
 /**

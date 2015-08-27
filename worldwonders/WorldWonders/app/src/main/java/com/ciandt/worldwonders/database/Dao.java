@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-
 import com.ciandt.worldwonders.converter.ConverterBase;
 
 import java.util.HashMap;
@@ -29,7 +28,7 @@ public class Dao<T> extends DaoBase {
     }
 
     public void setDatabase(SQLiteDatabase db) {
-            this.db = db;
+        this.db = db;
     }
 
     public List<T> getAll() {
@@ -68,9 +67,9 @@ public class Dao<T> extends DaoBase {
         String[] args = new String[n];
 
 
-        for (String key: values.keySet()) {
+        for (String key : values.keySet()) {
             if (key.equals("id")) continue;
-            sql += " AND " +  key + " = ? ";
+            sql += " AND " + key + " = ? ";
             args[i] = values.get(key).toString();
             ++i;
         }
@@ -93,7 +92,7 @@ public class Dao<T> extends DaoBase {
         String[] args = new String[values.size() + 1];
 
         for (String key : values.keySet()) {
-            if (i> 0) sql += ", ";
+            if (i > 0) sql += ", ";
             sql += key + " = ?";
             args[i] = values.get(key).toString();
             ++i;
@@ -119,7 +118,7 @@ public class Dao<T> extends DaoBase {
         int i = 0;
         boolean isFirst = true;
         String sql = "INSERT INTO " + tableName + " (";
-        for (String key: values.keySet()) {
+        for (String key : values.keySet()) {
             if (key.equals("id")) continue;
             if (!isFirst) {
                 sql += ", ";

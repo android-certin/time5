@@ -19,7 +19,7 @@ public class WorldWondersApp extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build());
 
-        if (!WondersSQLiteHelper.verifyDatabase()){
+        if (!WondersSQLiteHelper.verifyDatabase()) {
             WondersSQLiteHelper.copyDatabase(getApplicationContext());
         }
     }

@@ -11,8 +11,6 @@ import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,13 +18,13 @@ import java.util.Set;
 /**
  * Created by pmachado on 8/24/15.
  */
-public class WondersRepository  {
+public class WondersRepository {
     private Context context;
     private List<AsyncTask> tasks;
 
     public WondersRepository(Context context) {
         this.context = context;
-        tasks = new ArrayList<AsyncTask>();
+        tasks = new ArrayList<>();
     }
 
     @NonNull
@@ -88,13 +86,13 @@ public class WondersRepository  {
                 List<Wonder> result = wonderDao.getAll();
                 List<WonderBookmark> bookmarks = bookmarkDao.getAll();
 
-                Set<Integer> wonderMarked = new HashSet<Integer>();
+                Set<Integer> wonderMarked = new HashSet<>();
 
-                for (WonderBookmark bookmark: bookmarks) {
+                for (WonderBookmark bookmark : bookmarks) {
                     wonderMarked.add(bookmark.idWonder);
                 }
 
-                for (Wonder wonder: result) {
+                for (Wonder wonder : result) {
                     wonder.isMarked = wonderMarked.contains(wonder.id);
                 }
 
@@ -115,6 +113,14 @@ public class WondersRepository  {
         asyncTask.execute();
     }
 
+    public void cancel() {
+        for (AsyncTask asyncTask : tasks) {
+            if (!asyncTask.isCancelled()) {
+                asyncTask.cancel(true);
+            }
+        }
+    }
+
     public interface WonderAllListener {
         void onWonderAll(Exception e, List<Wonder> winders);
     }
@@ -125,13 +131,5 @@ public class WondersRepository  {
 
     public interface WonderDeleteListener {
         void onBookmarkDeleted(Exception e, boolean result);
-    }
-
-    public void cancel() {
-        for (AsyncTask asyncTask : tasks) {
-            if (!asyncTask.isCancelled()) {
-                asyncTask.cancel(true);
-            }
-        }
     }
 }

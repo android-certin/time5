@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.ui.activity.SignUpActivity;
 import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.protocol.Protocol;
+import com.ciandt.worldwonders.ui.activity.SignUpActivity;
 
 /**
  * Created by daianefs on 21/08/15.

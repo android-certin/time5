@@ -1,13 +1,11 @@
 package com.ciandt.worldwonders.ui.adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.ciandt.worldwonders.repository.WondersRepository;
-import com.ciandt.worldwonders.ui.fragment.HighlightFragment;
 import com.ciandt.worldwonders.model.Wonder;
+import com.ciandt.worldwonders.ui.fragment.HighlightFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;

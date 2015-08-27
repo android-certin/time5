@@ -1,26 +1,24 @@
 package com.ciandt.worldwonders.ui.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.ciandt.worldwonders.R;
-import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.protocol.Protocol;
 import com.ciandt.worldwonders.repository.WondersRepository;
 import com.ciandt.worldwonders.ui.activity.WonderDetailActivity;
 import com.ciandt.worldwonders.ui.adapter.HighlightPagerAdapter;
 import com.ciandt.worldwonders.ui.adapter.WonderItemAdapter;
-
-import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.List;
 

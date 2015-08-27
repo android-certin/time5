@@ -3,9 +3,9 @@ package com.ciandt.worldwonders.ui.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.ciandt.worldwonders.R;
 import com.ciandt.worldwonders.helper.Helpers;
-import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.model.WonderBookmark;
 import com.ciandt.worldwonders.protocol.Protocol;
@@ -39,10 +38,10 @@ public class WonderDetailActivity extends AppCompatActivity {
 
         wonder = (Wonder) getIntent().getSerializableExtra("wonder");
 
-        imageView = (ImageView)findViewById(R.id.wonder_item_image);
-        descriptionTextView = (TextView)findViewById(R.id.wonder_item_description);
-        toolbar = (Toolbar)findViewById(R.id.wonder_detail_toolbar);
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
+        imageView = (ImageView) findViewById(R.id.wonder_item_image);
+        descriptionTextView = (TextView) findViewById(R.id.wonder_item_description);
+        toolbar = (Toolbar) findViewById(R.id.wonder_detail_toolbar);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
 
         int resourceId = Helpers.getRawResourceID(this, wonder.photo.replace(".jpg", ""));
@@ -61,7 +60,6 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_wonder_detail, menu);
         bookmarkItem = menu.findItem(R.id.action_bookmark);
         updateBookmarkIcon();
@@ -70,9 +68,6 @@ public class WonderDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
@@ -126,8 +121,7 @@ public class WonderDetailActivity extends AppCompatActivity {
     private void updateBookmarkIcon() {
         if (wonder.isMarked) {
             bookmarkItem.setIcon(R.drawable.ic_bookmark_white_24dp);
-        }
-        else {
+        } else {
             bookmarkItem.setIcon(R.drawable.ic_bookmark_border_white_24dp);
         }
     }
@@ -148,8 +142,12 @@ public class WonderDetailActivity extends AppCompatActivity {
                 String.valueOf(wonder.longitude));
 
         if (uri != null) {
-            Intent sendIntent  = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(sendIntent);
+            try {
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(sendIntent);
+            } catch (Exception e) {
+                Toast.makeText(this, "uri desconhecida!", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "Desconhecido", Toast.LENGTH_SHORT).show();
         }

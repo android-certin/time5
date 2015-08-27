@@ -1,25 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.ciandt.worldwonders.ui.activity.WonderDetailActivity"
-    >
+    tools:context="com.ciandt.worldwonders.ui.activity.WonderDetailActivity">
 
-    <item android:id="@+id/action_bookmark"
-        android:title="Bookmark"
-        app:showAsAction="always"
+    <item
+        android:id="@+id/action_bookmark"
         android:icon="@drawable/ic_bookmark_border_white_24dp"
-        />
+        android:title="Bookmark"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/action_direction"
-        android:title="Direction"
-        app:showAsAction="always"
+    <item
+        android:id="@+id/action_direction"
         android:icon="@drawable/ic_directions_white_24dp"
-        />
+        android:title="Direction"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/action_share"
-        android:title="Share"
-        app:showAsAction="always"
+    <item
+        android:id="@+id/action_share"
         android:icon="@drawable/ic_share_white_24dp"
-        />
+        android:title="Share"
+        app:showAsAction="always" />
 
 </menu>

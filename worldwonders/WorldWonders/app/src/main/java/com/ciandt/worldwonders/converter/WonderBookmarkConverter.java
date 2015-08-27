@@ -2,22 +2,12 @@ package com.ciandt.worldwonders.converter;
 
 import com.ciandt.worldwonders.model.WonderBookmark;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by pmachado on 8/26/15.
  */
-public class WonderBookmarkConverter implements ConverterBase<WonderBookmark> {
-    @Override
-    public List<WonderBookmark> fromListHashMap(List<HashMap<String, Object>> listTable) {
-        List<WonderBookmark> list = new ArrayList<WonderBookmark>();
-        for (HashMap<String, Object> t: listTable) {
-            list.add(fromHashMap(t));
-        }
-        return list;
-    }
+public class WonderBookmarkConverter extends ConverterBase<WonderBookmark> {
 
     @Override
     public HashMap<String, Object> toHashMap(WonderBookmark v) {

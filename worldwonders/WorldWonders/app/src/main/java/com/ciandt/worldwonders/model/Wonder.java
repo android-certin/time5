@@ -8,13 +8,6 @@ import java.io.Serializable;
  * Created by pmachado on 8/23/15.
  */
 public class Wonder implements Serializable {
-    /*
-    * Neste modulo os nomes, descrições e imagens das maravilhas são carregados do database
-    * e enviados para o sistema de renderização
-    *
-    * TODO: Conectar essa classe com um banco de dados para extrair dados sobre as maravilhas
-    * */
-
     public int id;
     public String name;
     public String description;
@@ -24,11 +17,13 @@ public class Wonder implements Serializable {
     public double longitude;
     public boolean isMarked;
 
-    public static WonderConverter getConverter() {
-        return new WonderConverter();
-    }
-
-    public Wonder(String name, int id, String description, String url, String photo, double longitude, double latitude) {
+    public Wonder(String name,
+                  int id,
+                  String description,
+                  String url,
+                  String photo,
+                  double longitude,
+                  double latitude) {
         this.name = name;
         this.id = id;
         this.description = description;
@@ -43,5 +38,9 @@ public class Wonder implements Serializable {
         this.name = name;
         this.id = id;
         this.isMarked = false;
+    }
+
+    public static WonderConverter getConverter() {
+        return new WonderConverter();
     }
 }

@@ -11,10 +11,6 @@ public class WonderBookmark implements Serializable {
     public int id;
     public int idWonder;
 
-    public static WonderBookmarkConverter getConverter() {
-        return new WonderBookmarkConverter();
-    }
-
     public WonderBookmark(int id, int idWonder) {
         this.id = id;
         this.idWonder = idWonder;
@@ -24,8 +20,7 @@ public class WonderBookmark implements Serializable {
         this.idWonder = idWonder;
     }
 
-    public WonderBookmark() {
-        this.id = 0;
-        this.idWonder = 0;
+    public static WonderBookmarkConverter getConverter() {
+        return new WonderBookmarkConverter();
     }
 }

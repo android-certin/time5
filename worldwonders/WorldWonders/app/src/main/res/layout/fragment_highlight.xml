@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <ImageView
+        android:id="@+id/fragmanet_world_wonder_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragmanet_world_wonder_img"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
 
     <TextView
+        android:id="@+id/text_frag_hig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="23dip"
-        android:text="teste"
         android:layout_alignParentBottom="true"
-        android:id="@+id/text_frag_hig"
+        android:background="#50000000"
+        android:text="teste"
         android:textColor="#ffffff"
-        android:background="#50000000"/>
+        android:textSize="23dip" />
 
 </RelativeLayout>

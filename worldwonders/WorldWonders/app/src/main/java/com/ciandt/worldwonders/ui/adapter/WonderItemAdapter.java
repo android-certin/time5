@@ -2,7 +2,6 @@ package com.ciandt.worldwonders.ui.adapter;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,19 +28,19 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
     private Context context;
     private OnSelectWonderListener onSelectWonderListener;
 
-    public void updateWonder(Wonder wonder) {
-        int p = wonderMap.get(wonder.id);
-        wonderList.get(p).isMarked = wonder.isMarked;
-    }
-
     public WonderItemAdapter(List<Wonder> wonderList) {
         this.wonderList = wonderList;
         wonderMap = new HashMap<>();
         int i = 0;
-        for (Wonder w: wonderList) {
+        for (Wonder w : wonderList) {
             wonderMap.put(w.id, i);
             ++i;
         }
+    }
+
+    public void updateWonder(Wonder wonder) {
+        int p = wonderMap.get(wonder.id);
+        wonderList.get(p).isMarked = wonder.isMarked;
     }
 
     public void setOnSelectWonderListener(OnSelectWonderListener onSelectWonderListener) {
@@ -63,7 +62,7 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
         final Wonder wonder = wonderList.get(i);
 
         String namePhoto = wonder.photo;
-        int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg",""));
+        int resourceId = Helpers.getRawResourceID(context, namePhoto.replace(".jpg", ""));
         Picasso.with(context)
                 .load(resourceId)
                 .resize(100, 100)
@@ -87,6 +86,10 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
         return wonderList.size();
     }
 
+    public interface OnSelectWonderListener {
+        void onSelectWonder(Wonder wonder);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView text;
@@ -97,14 +100,10 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
             super(v);
 
 
-            this.text  = (TextView) v.findViewById(R.id.wonder_item_nome);
+            this.text = (TextView) v.findViewById(R.id.wonder_item_nome);
             this.image = (ImageView) v.findViewById(R.id.wonder_item_imagem);
             this.view = v;
 
         }
-    }
-
-    public interface OnSelectWonderListener {
-        void onSelectWonder(Wonder wonder);
     }
 }
