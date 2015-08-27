@@ -99,8 +99,8 @@ public class WonderDetailActivity extends AppCompatActivity {
     }
 
     private void addBookmark() {
-        BaseRepository<WonderBookmark> repository = new BaseRepository<>(this,
-                new WonderBookmarkDao(this));
+        BaseRepository<WonderBookmark> repository =
+                new BaseRepository<>(new WonderBookmarkDao(this));
         if (wonder.isMarked) {
             wonder.isMarked = false;
             repository.delete(new BaseRepository.OnDeleteListener() {

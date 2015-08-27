@@ -12,13 +12,11 @@ import java.util.List;
 /**
  * Created by pmachado on 8/27/15.
  */
-public class BaseRepository <T> {
-    protected Context context;
+public abstract class BaseRepository <T> {
     protected Dao<T> dao;
     protected List<AsyncTask> tasks;
 
-    public BaseRepository(Context context, Dao<T> dao) {
-        this.context = context;
+    public BaseRepository(Dao<T> dao) {
         tasks = new ArrayList<>();
         this.dao = dao;
     }
@@ -43,10 +41,6 @@ public class BaseRepository <T> {
         asyncTask.execute(data);
     }
 
-    protected Boolean insert(T data) {
-        Boolean result = dao.insert(data);
-        return result;
-    }
 
     @NonNull
     public void delete(final OnDeleteListener deleteListener, T data) {
@@ -68,12 +62,6 @@ public class BaseRepository <T> {
         asyncTask.execute(data);
     }
 
-    protected Boolean delete(T data) {
-        Boolean result = dao.delete(data);
-        dao.close();
-        return result;
-    }
-
     @NonNull
     public void getAll(final OnGetAllListener getAllListener) {
         AsyncTask<Void, Void, List<T>> asyncTask = new AsyncTask<Void, Void, List<T>>() {
@@ -91,12 +79,6 @@ public class BaseRepository <T> {
         };
         tasks.add(asyncTask);
         asyncTask.execute();
-    }
-
-    protected List<T> getAll() {
-        List<T> result = dao.getAll();
-        dao.close();
-        return result;
     }
 
     public void cancel() {
@@ -118,4 +100,23 @@ public class BaseRepository <T> {
     public interface OnDeleteListener {
         void onDeleted(Exception e, boolean result);
     }
+
+    //////////////////////////////////////////////
+    protected List<T> getAll() {
+        List<T> result = dao.getAll();
+        dao.close();
+        return result;
+    }
+
+    protected Boolean insert(T data) {
+        Boolean result = dao.insert(data);
+        return result;
+    }
+
+    protected Boolean delete(T data) {
+        Boolean result = dao.delete(data);
+        dao.close();
+        return result;
+    }
+
 }
