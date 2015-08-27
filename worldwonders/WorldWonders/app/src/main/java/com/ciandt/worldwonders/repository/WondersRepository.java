@@ -17,8 +17,10 @@ import java.util.Set;
  */
 public class WondersRepository extends BaseRepository<Wonder> {
 
+    protected Context context;
     public WondersRepository(Context context) {
-        super(context, new WonderDao(context));
+        super(new WonderDao(context));
+        this.context = context;
     }
 
     @Override
