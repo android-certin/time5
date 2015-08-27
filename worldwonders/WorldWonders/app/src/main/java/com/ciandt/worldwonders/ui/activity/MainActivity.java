@@ -1,9 +1,11 @@
 package com.ciandt.worldwonders.ui.activity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.User;
 import com.ciandt.worldwonders.ui.fragment.LoginFragment;
 import com.ciandt.worldwonders.ui.fragment.WondersFragment;
@@ -20,6 +22,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Helpers.isTablet(this)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+
         Log.i(TAG, "onCreate");
 
         setContentView(R.layout.activity_main);

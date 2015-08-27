@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ciandt.worldwonders.R;
+import com.ciandt.worldwonders.helper.Helpers;
 import com.ciandt.worldwonders.model.Wonder;
 import com.ciandt.worldwonders.protocol.Protocol;
 import com.ciandt.worldwonders.repository.BaseRepository;
@@ -56,23 +57,49 @@ public class WondersFragment extends Fragment {
         repository.getAll(new BaseRepository.OnGetAllListener<Wonder>() {
             @Override
             public void onGetAll(Exception e, List<Wonder> wonders) {
-                pagerAdapter = new HighlightPagerAdapter(getFragmentManager(), wonders);
-                viewPager.setAdapter(pagerAdapter);
-
-                wonderItemAdapter = new WonderItemAdapter(wonders);
-                wonderItemAdapter.setOnSelectWonderListener(new WonderItemAdapter.OnSelectWonderListener() {
-                    @Override
-                    public void onSelectWonder(Wonder wonder) {
-                        Intent intent = new Intent(getContext(), WonderDetailActivity.class);
-                        intent.putExtra("wonder", wonder);
-                        startActivityForResult(intent, Protocol.UPDATE_BOOKMARK);
-                    }
-                });
-                recyclerView.setAdapter(wonderItemAdapter);
-
+                createAdapters(wonders);
                 progressFragment.dismiss();
             }
         });
+    }
+
+    private void createAdapters(List<Wonder> wonders)
+    {
+        pagerAdapter = new HighlightPagerAdapter(getFragmentManager(), wonders);
+        viewPager.setAdapter(pagerAdapter);
+
+        wonderItemAdapter = new WonderItemAdapter(wonders);
+        wonderItemAdapter.setOnSelectWonderListener(new WonderItemAdapter.OnSelectWonderListener() {
+            @Override
+            public void onSelectWonder(Wonder wonder) {
+                openDetail(wonder);
+            }
+        });
+
+        recyclerView.setAdapter(wonderItemAdapter);
+    }
+
+    private void openDetail(Wonder wonder)
+    {
+        if (Helpers.isTablet(getContext())) {
+            WonderDetailFragment wonderDetail = WonderDetailFragment.newInstance(wonder);
+
+            wonderDetail.setOnBookmarkListener(new WonderDetailFragment.OnBookmarkListener() {
+                @Override
+                public void onBookmarked(Wonder w) {
+                    wonderItemAdapter.updateWonder(w);
+                }
+            });
+
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.detailContainerRight, wonderDetail)
+                    .commit();
+        }
+        else {
+            Intent intent = new Intent(getContext(), WonderDetailActivity.class);
+            intent.putExtra("wonder", wonder);
+            startActivityForResult(intent, Protocol.UPDATE_BOOKMARK);
+        }
     }
 
     @Override

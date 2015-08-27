@@ -15,4 +15,8 @@ public class Helpers {
         return context.getResources().getIdentifier(drawableResourceName, "drawable",
                 context.getPackageName());
     }
+
+    public static boolean isTablet(Context context) {
+        return context.getResources().getConfiguration().smallestScreenWidthDp >= 720;
+    }
 }
