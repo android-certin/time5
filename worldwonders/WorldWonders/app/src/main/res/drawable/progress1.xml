@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/camera_selected" android:left="0px" android:right="400px"/>
+    <item android:drawable="@drawable/eiffel_tower_normal" android:left="100px" android:right="300px"/>
+    <item android:drawable="@drawable/pyramids_normal" android:left="200px" android:right="200px"/>
+    <item android:drawable="@drawable/suitcase_normal" android:left="300px" android:right="100px"/>
+    <item android:drawable="@drawable/taj_mahal_normal" android:left="400px" android:right="0px"/>
+</layer-list>

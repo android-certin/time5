@@ -49,6 +49,8 @@ public class WondersFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        final ProgressFragment progressFragment = ProgressFragment.show(getFragmentManager());
+
         WondersRepository repository = new WondersRepository(getContext());
         repository.getAll(new WondersRepository.WonderAllListener() {
             @Override
@@ -66,6 +68,8 @@ public class WondersFragment extends Fragment {
                     }
                 });
                 recyclerView.setAdapter(wonderItemAdapter);
+
+                progressFragment.dismiss();
             }
         });
     }
