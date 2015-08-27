@@ -26,6 +26,7 @@ public class ProgressFragment extends DialogFragment {
 
     static public ProgressFragment show(FragmentManager manager)  {
         ProgressFragment fragment = new ProgressFragment();
+        fragment.setCancelable(false);
         fragment.show(manager, "source_dialog");
         return fragment;
     }

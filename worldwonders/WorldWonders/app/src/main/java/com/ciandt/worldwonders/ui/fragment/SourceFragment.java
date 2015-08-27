@@ -28,6 +28,7 @@ public class SourceFragment extends android.support.v4.app.DialogFragment {
 
         args.putSerializable("wonder", wonder);
         fragment.setArguments(args);
+        fragment.setCancelable(false);
 
         fragment.show(manager, "source_dialog");
 

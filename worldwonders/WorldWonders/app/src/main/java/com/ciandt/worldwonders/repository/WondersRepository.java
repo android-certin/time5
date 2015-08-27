@@ -42,7 +42,7 @@ public class WondersRepository extends BaseRepository<Wonder> {
         dao.close();
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(3000);
         } catch (Exception e) {
         }
 
