@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by pmachado on 8/27/15.
  */
-public abstract class BaseRepository <T> {
+public class BaseRepository <T> {
     protected Dao<T> dao;
     protected List<AsyncTask> tasks;
 
