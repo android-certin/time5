@@ -185,11 +185,12 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
     }
 
     private void getDirection() {
-        Uri uri = Uri.parse("geo:" +
+        if (wonder.latitude != 0 || wonder.longitude != 0) {
+
+            Uri uri = Uri.parse("geo:" +
                 String.valueOf(wonder.latitude) + "," +
                 String.valueOf(wonder.longitude));
 
-        if (uri != null) {
             try {
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(sendIntent);
