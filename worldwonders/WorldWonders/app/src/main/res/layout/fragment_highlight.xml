@@ -6,7 +6,7 @@
 
 
     <ImageView
-        android:id="@+id/fragmanet_world_wonder_img"
+        android:id="@+id/fragment_world_wonder_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />

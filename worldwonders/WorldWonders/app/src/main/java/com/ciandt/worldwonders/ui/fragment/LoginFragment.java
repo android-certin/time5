@@ -39,9 +39,9 @@ public class LoginFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login, container, false);
         loginButton = (Button) view.findViewById(R.id.btn_login);
-        signupButton = (Button) view.findViewById(R.id.btn_signup);
+        signupButton = (Button) view.findViewById(R.id.buttonSignUp);
         usernameEditText = (EditText) view.findViewById(R.id.input_user_name);
-        passwordEditText = (EditText) view.findViewById(R.id.input_password);
+        passwordEditText = (EditText) view.findViewById(R.id.inputPassword);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override

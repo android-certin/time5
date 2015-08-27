@@ -15,18 +15,18 @@ import com.ciandt.worldwonders.protocol.Protocol;
 public class SignUpActivity extends AppCompatActivity {
 
     EditText nameEditText, userEditText;
-    Button signupButton;
+    Button signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        signupButton = (Button) findViewById(R.id.btn_signup);
-        nameEditText = (EditText) findViewById(R.id.input_name);
-        userEditText = (EditText) findViewById(R.id.input_user);
+        signUpButton = (Button) findViewById(R.id.buttonSignUp);
+        nameEditText = (EditText) findViewById(R.id.inputName);
+        userEditText = (EditText) findViewById(R.id.inputUser);
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

@@ -27,9 +27,9 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
 
     public static boolean verifyDatabase() {
 
-        File filedb = new File(DATABASE_PATH);
+        File fileDb = new File(DATABASE_PATH);
 
-        if (filedb.exists()) {
+        if (fileDb.exists()) {
             return true;
         }
 
@@ -39,20 +39,20 @@ public class WondersSQLiteHelper extends SQLiteOpenHelper {
     public static boolean copyDatabase(Context context) {
 
         try {
-            InputStream filedb = context.getAssets().open("database/" + DATABASE_NAME);
-            File diretorio = new File(DATABASE_DIRECTORY);
-            if (!diretorio.exists()) {
-                diretorio.mkdirs();
+            InputStream fileDB = context.getAssets().open("database/" + DATABASE_NAME);
+            File directory = new File(DATABASE_DIRECTORY);
+            if (!directory.exists()) {
+                directory.mkdirs();
             }
 
             OutputStream out = new FileOutputStream(new File(DATABASE_PATH));
             byte[] buf = new byte[1024];
             int len;
-            while ((len = filedb.read(buf)) > 0) {
+            while ((len = fileDB.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
             out.close();
-            filedb.close();
+            fileDB.close();
 
 
         } catch (IOException e) {

@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
         WondersFragment wondersFragment = new WondersFragment();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameMain, wondersFragment)
+                .replace(R.id.mainContainer, wondersFragment)
                 .commit();
     }
 
@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
         );
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameMain, loginFragment)
+                .replace(R.id.mainContainer, loginFragment)
                 .commit();
     }
 

@@ -11,14 +11,6 @@ import com.ciandt.worldwonders.model.WonderBookmark;
 public class WonderBookmarkDao extends Dao<WonderBookmark> {
     WondersSQLiteHelper dbHelper;
 
-    public WonderBookmarkDao(Context context, String tableName) {
-        super(tableName, WonderBookmark.getConverter());
-
-        dbHelper = new WondersSQLiteHelper(context);
-
-        setDatabase(dbHelper.getWritableDatabase());
-    }
-
     public WonderBookmarkDao(Context context) {
         super("bookmarks", WonderBookmark.getConverter());
 

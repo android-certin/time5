@@ -34,12 +34,6 @@ public class Wonder implements Serializable {
         this.isMarked = false;
     }
 
-    public Wonder(String name, int id) {
-        this.name = name;
-        this.id = id;
-        this.isMarked = false;
-    }
-
     public static WonderConverter getConverter() {
         return new WonderConverter();
     }

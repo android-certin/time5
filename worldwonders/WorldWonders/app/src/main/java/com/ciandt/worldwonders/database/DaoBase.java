@@ -13,12 +13,12 @@ import java.util.List;
  */
 public class DaoBase {
     public List<HashMap<String, Object>> convert(Cursor cursor) {
-        List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+        List<HashMap<String, Object>> result = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             do {
                 int nc = cursor.getColumnCount();
-                HashMap<String, Object> row = new HashMap<String, Object>();
+                HashMap<String, Object> row = new HashMap<>();
 
                 for (int i = 0; i < nc; ++i) {
                     String key = cursor.getColumnName(i);

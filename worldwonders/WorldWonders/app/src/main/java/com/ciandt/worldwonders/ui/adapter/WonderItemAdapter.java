@@ -100,8 +100,8 @@ public class WonderItemAdapter extends RecyclerView.Adapter<WonderItemAdapter.Vi
             super(v);
 
 
-            this.text = (TextView) v.findViewById(R.id.wonder_item_nome);
-            this.image = (ImageView) v.findViewById(R.id.wonder_item_imagem);
+            this.text = (TextView) v.findViewById(R.id.wonder_item_name);
+            this.image = (ImageView) v.findViewById(R.id.wonder_item_image);
             this.view = v;
 
         }

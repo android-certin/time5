@@ -11,14 +11,6 @@ import com.ciandt.worldwonders.model.Wonder;
 public class WonderDao extends Dao<Wonder> {
     WondersSQLiteHelper dbHelper;
 
-    public WonderDao(Context context, String tableName) {
-        super(tableName, Wonder.getConverter());
-
-        dbHelper = new WondersSQLiteHelper(context);
-
-        setDatabase(dbHelper.getWritableDatabase());
-    }
-
     public WonderDao(Context context) {
         super("wonders", Wonder.getConverter());
 

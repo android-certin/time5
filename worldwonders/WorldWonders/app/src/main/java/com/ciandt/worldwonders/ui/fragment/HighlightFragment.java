@@ -52,7 +52,7 @@ public class HighlightFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageView imgWonder = (ImageView) view.findViewById(R.id.fragmanet_world_wonder_img);
+        ImageView imgWonder = (ImageView) view.findViewById(R.id.fragment_world_wonder_img);
         String namePhoto = wonder.photo;
 
         TextView textView = (TextView) view.findViewById(R.id.text_frag_hig);
