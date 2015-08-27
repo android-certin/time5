@@ -46,7 +46,9 @@ public class WondersFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewPager = (ViewPager) view.findViewById(R.id.slide);
+
+        if (!Helpers.isTablet(getContext()))
+            viewPager = (ViewPager) view.findViewById(R.id.slide);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -65,8 +67,10 @@ public class WondersFragment extends Fragment {
 
     private void createAdapters(List<Wonder> wonders)
     {
-        pagerAdapter = new HighlightPagerAdapter(getFragmentManager(), wonders);
-        viewPager.setAdapter(pagerAdapter);
+        if (!Helpers.isTablet(getContext())) {
+            pagerAdapter = new HighlightPagerAdapter(getFragmentManager(), wonders);
+            viewPager.setAdapter(pagerAdapter);
+        }
 
         wonderItemAdapter = new WonderItemAdapter(wonders);
         wonderItemAdapter.setOnSelectWonderListener(new WonderItemAdapter.OnSelectWonderListener() {

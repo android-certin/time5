@@ -98,7 +98,8 @@ public class WonderDetailFragment extends android.support.v4.app.Fragment {
         descriptionTextView.setText(wonder.description);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (!Helpers.isTablet(getContext()))
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         return view;
     }
