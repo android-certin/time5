@@ -60,7 +60,10 @@ public class WondersFragment extends Fragment {
             @Override
             public void onGetAll(Exception e, List<Wonder> wonders) {
                 createAdapters(wonders);
-                openDetail(wonders.get(0));
+
+                if (Helpers.isTablet(getContext()))
+                    openDetail(wonders.get(0));
+
                 progressFragment.dismiss();
             }
         });
